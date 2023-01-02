@@ -1,4 +1,4 @@
-package com.aiglesiaspubill.androidavanzadofinal
+package com.aiglesiaspubill.androidavanzadofinal.domain
 
 data class Hero (
         val id: String,

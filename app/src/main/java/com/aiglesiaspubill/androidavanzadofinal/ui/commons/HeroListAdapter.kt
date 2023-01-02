@@ -1,4 +1,4 @@
-package com.aiglesiaspubill.androidavanzadofinal
+package com.aiglesiaspubill.androidavanzadofinal.ui.commons
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.aiglesiaspubill.androidavanzadofinal.R
 import com.aiglesiaspubill.androidavanzadofinal.databinding.ItemHeroListBinding
+import com.aiglesiaspubill.androidavanzadofinal.domain.Hero
 
 class HeroListAdapter: ListAdapter<Hero, HeroListAdapter.HeroViewHolder>(HeroDiffCallback()) {
 

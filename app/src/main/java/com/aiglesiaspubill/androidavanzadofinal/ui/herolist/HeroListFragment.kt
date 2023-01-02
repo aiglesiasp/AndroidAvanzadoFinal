@@ -1,12 +1,16 @@
-package com.aiglesiaspubill.androidavanzadofinal
+package com.aiglesiaspubill.androidavanzadofinal.ui.herolist
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.aiglesiaspubill.androidavanzadofinal.databinding.FragmentHeroListBinding
+import com.aiglesiaspubill.androidavanzadofinal.domain.Hero
+import com.aiglesiaspubill.androidavanzadofinal.ui.commons.CoroutineViewModel
+import com.aiglesiaspubill.androidavanzadofinal.ui.commons.HeroListAdapter
 import java.util.UUID
 
 /**
@@ -20,9 +24,10 @@ class HeroListFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
-    private val heroesList = listOf<String>()
-
     private val adapter = HeroListAdapter()
+
+    private val viewModel: HeroesListViewModel by viewModels()
+
 
 
     override fun onCreateView(
@@ -42,6 +47,10 @@ class HeroListFragment : Fragment() {
             heroList.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             heroList.adapter = adapter
             adapter.submitList(getHeros(1000))
+
+            fab.setOnClickListener {
+
+            }
         }
 
     }
