@@ -48,9 +48,7 @@ class HeroListFragment : Fragment() {
             heroList.adapter = adapter
             adapter.submitList(getHeros(1000))
 
-            fab.setOnClickListener {
-
-            }
+            viewModel.getBootcamps()
         }
 
     }

@@ -5,4 +5,8 @@ import com.aiglesiaspubill.androidavanzadofinal.data.remote.RemoteDataSource
 class Repository {
 
     private val remoteDataSource = RemoteDataSource()
+
+    suspend fun getBootcamps() {
+        remoteDataSource.getBootcamps()
+    }
 }
