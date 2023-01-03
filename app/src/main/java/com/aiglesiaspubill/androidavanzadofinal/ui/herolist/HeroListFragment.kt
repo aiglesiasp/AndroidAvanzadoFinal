@@ -46,26 +46,16 @@ class HeroListFragment : Fragment() {
         with(binding) {
             heroList.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             heroList.adapter = adapter
-            adapter.submitList(getHeros(1000))
 
-            viewModel.getBootcamps()
+            viewModel.heros.observe(viewLifecycleOwner) { heroList ->
+                adapter.submitList(heroList)
+            }
+            viewModel.getHeroes()
         }
-
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-
-    private fun getHeros(size: Int): List<Hero> {
-        val heros = mutableListOf<Hero>()
-
-        for (i in 0..size) {
-            heros.add(Hero(UUID.randomUUID().toString(), "Super Heroe $i"))
-        }
-
-        return heros
     }
 }

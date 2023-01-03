@@ -6,6 +6,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.aiglesiaspubill.androidavanzadofinal.R
 import com.aiglesiaspubill.androidavanzadofinal.databinding.ItemHeroListBinding
 import com.aiglesiaspubill.androidavanzadofinal.domain.Hero
@@ -29,6 +30,7 @@ class HeroListAdapter: ListAdapter<Hero, HeroListAdapter.HeroViewHolder>(HeroDif
         fun bind(hero: Hero) {
             with(binding) {
                 heroName.text = hero.name
+                heroImage.load(hero.photo)
             }
         }
     }

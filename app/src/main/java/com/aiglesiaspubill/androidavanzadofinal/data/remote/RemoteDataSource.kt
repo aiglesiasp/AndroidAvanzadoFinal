@@ -1,5 +1,8 @@
 package com.aiglesiaspubill.androidavanzadofinal.data.remote
 
+import com.aiglesiaspubill.androidavanzadofinal.data.remote.request.HerosRequest
+import com.aiglesiaspubill.androidavanzadofinal.domain.Bootcamp
+import com.aiglesiaspubill.androidavanzadofinal.domain.Hero
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
@@ -22,7 +25,13 @@ class RemoteDataSource {
 
     private var api: DragonBallAPI = retrofit.create(DragonBallAPI::class.java)
 
-    suspend fun getBootcamps() {
-        api.getBootcamps()
+    //FUNCION OBTENR BOOTCAMPS - LLAMADA A LA API
+    suspend fun getBootcamps(): List<Bootcamp> {
+        return api.getBootcamps()
+    }
+
+    //FUNCION OBTENR HEROES - LLAMADA A LA API
+    suspend fun getHeroes(): List<Hero> {
+        return api.getHeros(HerosRequest())
     }
 }
