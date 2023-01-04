@@ -1,6 +1,7 @@
 package com.aiglesiaspubill.androidavanzadofinal.data.remote
 
 import com.aiglesiaspubill.androidavanzadofinal.data.remote.request.HerosRequest
+import com.aiglesiaspubill.androidavanzadofinal.data.remote.response.HeroRemote
 import com.aiglesiaspubill.androidavanzadofinal.domain.Bootcamp
 import com.aiglesiaspubill.androidavanzadofinal.domain.Hero
 import com.squareup.moshi.Moshi
@@ -31,16 +32,17 @@ class RemoteDataSource {
 
 
     private val okHttpClient = OkHttpClient.Builder()
-        .addInterceptor { chain ->
-            val originalRequest = chain.request()
-            val newRequest = originalRequest.newBuilder()
-                .header("Authorization", "Bearer $TAG_TOKEN")
-                .build()
+        //.addInterceptor { chain ->
+        //    val originalRequest = chain.request()
+        //    val newRequest = originalRequest.newBuilder()
+        //        .header("Authorization", "Bearer $TAG_TOKEN")
+        //        .build()
 
-            chain.proceed(newRequest)
-        }
+         //   chain.proceed(newRequest)
+        //}
         .authenticator { _ , response ->
-            response.request.newBuilder().header("Authorization", "Bearer $TAG_TOKEN").build()
+            response.request.newBuilder()
+                .header("Authorization", "Bearer $TAG_TOKEN").build()
         }
         .addInterceptor(httpLoggingInterceptor)
         .build()
@@ -60,7 +62,7 @@ class RemoteDataSource {
     }
 
     //FUNCION OBTENR HEROES - LLAMADA A LA API
-    suspend fun getHeroes(): List<Hero> {
+    suspend fun getHeroes(): List<HeroRemote> {
         return api.getHeros(HerosRequest())
     }
 }

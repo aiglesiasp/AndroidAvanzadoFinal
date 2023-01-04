@@ -1,6 +1,7 @@
 package com.aiglesiaspubill.androidavanzadofinal.data.remote
 
 import com.aiglesiaspubill.androidavanzadofinal.data.remote.request.HerosRequest
+import com.aiglesiaspubill.androidavanzadofinal.data.remote.response.HeroRemote
 import com.aiglesiaspubill.androidavanzadofinal.domain.Bootcamp
 import com.aiglesiaspubill.androidavanzadofinal.domain.Hero
 import retrofit2.http.Body
@@ -16,7 +17,7 @@ interface DragonBallAPI {
 
     //LLAMADA A HEROES DE LA API DE DRAGONBALL
     @POST("/api/heros/all")
-    suspend fun getHeros(@Body herosRequest: HerosRequest): List<Hero>
+    suspend fun getHeros(@Body herosRequest: HerosRequest): List<HeroRemote>
 
 
 }

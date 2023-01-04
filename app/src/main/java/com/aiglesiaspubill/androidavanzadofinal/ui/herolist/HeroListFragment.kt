@@ -51,6 +51,7 @@ class HeroListFragment : Fragment() {
                 adapter.submitList(heroList)
             }
             viewModel.getHeroes()
+            viewModel.initDatabase(requireContext())
         }
     }
 

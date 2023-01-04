@@ -1,5 +1,6 @@
 package com.aiglesiaspubill.androidavanzadofinal.ui.herolist
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -21,6 +22,11 @@ class HeroesListViewModel: ViewModel() {
 
     companion object {
         private val TAG = "HeroesListViewModel"
+    }
+
+    //FUNCION INICIAR DATABASE
+    fun initDatabase(context: Context) {
+        repository.initLocalDataBase(context)
     }
 
     //obtener Bootcamps
