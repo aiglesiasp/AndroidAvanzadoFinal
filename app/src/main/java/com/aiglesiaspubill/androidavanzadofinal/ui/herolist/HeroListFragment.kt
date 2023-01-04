@@ -50,8 +50,8 @@ class HeroListFragment : Fragment() {
             viewModel.heros.observe(viewLifecycleOwner) { heroList ->
                 adapter.submitList(heroList)
             }
-            viewModel.getHeroes()
             viewModel.initDatabase(requireContext())
+            viewModel.getHeroes()
         }
     }
 

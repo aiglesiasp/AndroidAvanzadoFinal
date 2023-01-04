@@ -43,7 +43,7 @@ class HeroesListViewModel: ViewModel() {
     fun getHeroes() {
         viewModelScope.launch {
             val heroes = withContext(Dispatchers.IO) {
-                repository.getHeroes()
+                repository.getHeroesWithCache()
             }
             _heros.value = heroes
         }
