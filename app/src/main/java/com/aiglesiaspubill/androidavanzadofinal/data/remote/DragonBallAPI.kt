@@ -16,7 +16,6 @@ interface DragonBallAPI {
 
     //LLAMADA A HEROES DE LA API DE DRAGONBALL
     @POST("/api/heros/all")
-    @Headers("Authorization: Bearer eyJraWQiOiJwcml2YXRlIiwidHlwIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJpZGVudGlmeSI6IkM3QTZBRENFLUM3MjUtNDlFRi04MEFDLTMxNDVCODkxQzg5NCIsImV4cGlyYXRpb24iOjY0MDkyMjExMjAwLCJlbWFpbCI6ImFpZ2xlc2lhc3B1YmlsbEBnbWFpbC5jb20ifQ.NjSKR-UPBTVSNIKunr8QPjwUiZJcnUObOv0pYG28Avc")
     suspend fun getHeros(@Body herosRequest: HerosRequest): List<Hero>
 
 

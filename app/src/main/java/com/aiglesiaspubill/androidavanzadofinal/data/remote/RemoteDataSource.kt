@@ -13,13 +13,42 @@ import java.util.concurrent.TimeUnit
 
 class RemoteDataSource {
 
+    companion object {
+        const val TAG_TOKEN = "eyJraWQiOiJwcml2YXRlIiwidHlwIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJpZGVudGlmeSI6IkM3QTZBRENFLUM3MjUtNDlFRi04MEFDLTMxNDVCODkxQzg5NCIsImV4cGlyYXRpb24iOjY0MDkyMjExMjAwLCJlbWFpbCI6ImFpZ2xlc2lhc3B1YmlsbEBnbWFpbC5jb20ifQ.NjSKR-UPBTVSNIKunr8QPjwUiZJcnUObOv0pYG28Avc"
+    }
+
     //Crear conexion con APIDRAGONBALL
     private val moshi = Moshi.Builder()
         .addLast(KotlinJsonAdapterFactory())
         .build()
 
+    //CREANDO INTERCEPTORES
+    private val httpLoggingInterceptor = HttpLoggingInterceptor(HttpLoggingInterceptor.Logger.DEFAULT).apply {
+        level = HttpLoggingInterceptor.Level.BODY
+    }
+
+
+
+
+    private val okHttpClient = OkHttpClient.Builder()
+        .addInterceptor { chain ->
+            val originalRequest = chain.request()
+            val newRequest = originalRequest.newBuilder()
+                .header("Authorization", "Bearer $TAG_TOKEN")
+                .build()
+
+            chain.proceed(newRequest)
+        }
+        .authenticator { _ , response ->
+            response.request.newBuilder().header("Authorization", "Bearer $TAG_TOKEN").build()
+        }
+        .addInterceptor(httpLoggingInterceptor)
+        .build()
+
+    //CREANDO RETROFIT
     private var retrofit = Retrofit.Builder()
         .baseUrl("https://dragonball.keepcoding.education")
+        .client(okHttpClient)
         .addConverterFactory(MoshiConverterFactory.create(moshi))
         .build()
 
