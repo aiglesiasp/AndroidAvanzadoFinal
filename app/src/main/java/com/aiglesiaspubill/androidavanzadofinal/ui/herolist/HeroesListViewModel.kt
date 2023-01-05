@@ -28,7 +28,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Inject
 
 @HiltViewModel
-class HeroesListViewModel @Inject constructor(private val repository : RepositoryImpl): ViewModel() {
+class HeroesListViewModel @Inject constructor(private val repository : Repository): ViewModel() {
 
     private val _heros = MutableLiveData<List<Hero>>()
     val heros: LiveData<List<Hero>>
