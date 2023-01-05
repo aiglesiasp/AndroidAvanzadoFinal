@@ -24,6 +24,8 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object RemoteModule {
 
+    private val TAG_TOKEN = "eyJraWQiOiJwcml2YXRlIiwidHlwIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJpZGVudGlmeSI6IkM3QTZBRENFLUM3MjUtNDlFRi04MEFDLTMxNDVCODkxQzg5NCIsImV4cGlyYXRpb24iOjY0MDkyMjExMjAwLCJlbWFpbCI6ImFpZ2xlc2lhc3B1YmlsbEBnbWFpbC5jb20ifQ.NjSKR-UPBTVSNIKunr8QPjwUiZJcnUObOv0pYG28Avc"
+
     //NOS DA EL HTTPLOGINGINTERCEPTOR
     @Provides
     fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
@@ -38,9 +40,16 @@ object RemoteModule {
     @Provides
     fun provideOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
         val okHttpClient = OkHttpClient.Builder()
+            .addInterceptor { chain ->
+                val originalRequest = chain.request()
+                val newRequest = originalRequest.newBuilder()
+                    .header("Content-Type", "Application/Json")
+                    .build()
+                chain.proceed(newRequest)
+            }
             .authenticator { _, response ->
                 response.request.newBuilder()
-                    .header("Authorization", "Bearer ${HeroesListViewModel.TAG_TOKEN}").build()
+                    .header("Authorization", "Bearer $TAG_TOKEN").build()
             }
             .addInterceptor(httpLoggingInterceptor)
             .build()
