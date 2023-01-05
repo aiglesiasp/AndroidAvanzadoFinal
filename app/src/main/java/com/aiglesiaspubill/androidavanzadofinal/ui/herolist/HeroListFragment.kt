@@ -9,10 +9,12 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.aiglesiaspubill.androidavanzadofinal.databinding.FragmentHeroListBinding
 import com.aiglesiaspubill.androidavanzadofinal.ui.commons.HeroListAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
+@AndroidEntryPoint
 class HeroListFragment : Fragment() {
 
     private var _binding: FragmentHeroListBinding? = null
@@ -23,9 +25,7 @@ class HeroListFragment : Fragment() {
 
     private val adapter = HeroListAdapter()
 
-    private val viewModel: HeroesListViewModel by viewModels() {
-        HeroesListViewModel.Factory
-    }
+    private val viewModel: HeroesListViewModel by viewModels()
 
 
 

@@ -1,18 +1,21 @@
 package com.aiglesiaspubill.androidavanzadofinal.data
 
 import com.aiglesiaspubill.androidavanzadofinal.data.local.LocalDataSource
+import com.aiglesiaspubill.androidavanzadofinal.data.local.LocalDataSourceImpl
 import com.aiglesiaspubill.androidavanzadofinal.data.mappers.LocalToPresentationMapper
 import com.aiglesiaspubill.androidavanzadofinal.data.mappers.RemoteToLocalMapper
 import com.aiglesiaspubill.androidavanzadofinal.data.mappers.RemoteToPresentationMapper
 import com.aiglesiaspubill.androidavanzadofinal.data.remote.RemoteDataSource
+import com.aiglesiaspubill.androidavanzadofinal.data.remote.RemoteDataSourceImpl
 import com.aiglesiaspubill.androidavanzadofinal.domain.Bootcamp
 import com.aiglesiaspubill.androidavanzadofinal.domain.Hero
+import javax.inject.Inject
 
-class RepositoryImpl(private val localDataSource: LocalDataSource,
-                     private val remoteDataSource: RemoteDataSource,
-                     private val remoteToPresentationMapper: RemoteToPresentationMapper,
-                     private val remoteToLocalMapper: RemoteToLocalMapper,
-                     private val localToPresentationMapper: LocalToPresentationMapper
+class RepositoryImpl @Inject constructor(private val localDataSource: LocalDataSourceImpl,
+                                         private val remoteDataSource: RemoteDataSourceImpl,
+                                         private val remoteToPresentationMapper: RemoteToPresentationMapper,
+                                         private val remoteToLocalMapper: RemoteToLocalMapper,
+                                         private val localToPresentationMapper: LocalToPresentationMapper
 
                  ): Repository {
 

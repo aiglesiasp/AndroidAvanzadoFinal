@@ -2,8 +2,9 @@ package com.aiglesiaspubill.androidavanzadofinal.data.mappers
 
 import com.aiglesiaspubill.androidavanzadofinal.data.remote.response.HeroRemote
 import com.aiglesiaspubill.androidavanzadofinal.domain.Hero
+import javax.inject.Inject
 
-class RemoteToPresentationMapper {
+class RemoteToPresentationMapper @Inject constructor() {
 
     //MAPEAR LISTA DE HEROES DE REMOTO A PRESENTACION
     fun map(heroListRemote: List<HeroRemote>): List<Hero> {

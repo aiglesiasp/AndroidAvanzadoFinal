@@ -2,8 +2,9 @@ package com.aiglesiaspubill.androidavanzadofinal.data.mappers
 
 import com.aiglesiaspubill.androidavanzadofinal.data.local.model.HeroLocal
 import com.aiglesiaspubill.androidavanzadofinal.domain.Hero
+import javax.inject.Inject
 
-class LocalToPresentationMapper {
+class LocalToPresentationMapper @Inject constructor() {
 
     //MAPEAR LISTA DE HEROES DE REMOTO A PRESENTACION
     fun map(heroListLocal: List<HeroLocal>): List<Hero> {

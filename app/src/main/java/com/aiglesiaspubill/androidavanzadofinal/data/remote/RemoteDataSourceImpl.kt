@@ -3,8 +3,9 @@ package com.aiglesiaspubill.androidavanzadofinal.data.remote
 import com.aiglesiaspubill.androidavanzadofinal.data.remote.request.HerosRequest
 import com.aiglesiaspubill.androidavanzadofinal.data.remote.response.HeroRemote
 import com.aiglesiaspubill.androidavanzadofinal.domain.Bootcamp
+import javax.inject.Inject
 
-class RemoteDataSourceImpl (private val api: DragonBallAPI) : RemoteDataSource {
+class RemoteDataSourceImpl @Inject constructor(private val api: DragonBallAPI) : RemoteDataSource {
 
     //FUNCION OBTENR BOOTCAMPS - LLAMADA A LA API
     override suspend fun getBootcamps(): List<Bootcamp> {

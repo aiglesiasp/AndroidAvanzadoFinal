@@ -17,6 +17,7 @@ import com.aiglesiaspubill.androidavanzadofinal.data.remote.RemoteDataSourceImpl
 import com.aiglesiaspubill.androidavanzadofinal.domain.Hero
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -24,8 +25,10 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import javax.inject.Inject
 
-class HeroesListViewModel(private val repository : Repository): ViewModel() {
+@HiltViewModel
+class HeroesListViewModel @Inject constructor(private val repository : RepositoryImpl): ViewModel() {
 
     private val _heros = MutableLiveData<List<Hero>>()
     val heros: LiveData<List<Hero>>
@@ -35,64 +38,6 @@ class HeroesListViewModel(private val repository : Repository): ViewModel() {
     companion object {
         const val TAG_TOKEN = "eyJraWQiOiJwcml2YXRlIiwidHlwIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJpZGVudGlmeSI6IkM3QTZBRENFLUM3MjUtNDlFRi04MEFDLTMxNDVCODkxQzg5NCIsImV4cGlyYXRpb24iOjY0MDkyMjExMjAwLCJlbWFpbCI6ImFpZ2xlc2lhc3B1YmlsbEBnbWFpbC5jb20ifQ.NjSKR-UPBTVSNIKunr8QPjwUiZJcnUObOv0pYG28Avc"
         private val TAG = "HeroesListViewModel"
-
-        //AQUI ESTOY METIENDO TODAS LAS DEPENDECIAS
-        val Factory: ViewModelProvider.Factory = object : ViewModelProvider.Factory {
-            @Suppress("UNCHECKED_CAST")
-            override fun <T : ViewModel> create(
-                modelClass: Class<T>,
-                extras: CreationExtras
-            ): T {
-                //INICIAR CONEXION CON REPOSITORIO LOCAL
-                val application = checkNotNull(extras[APPLICATION_KEY])
-                val db = Room.databaseBuilder(application, HeroDatabase::class.java, "database-name").build()
-                val dao = db.getDAO()
-                val localDataSource = LocalDataSourceImpl(dao)
-
-                //INICIAR CONEXION CON REPOSITORIO REMOTO
-                // Crear conexion con APIDRAGONBALL
-                val moshi = Moshi.Builder()
-                    .addLast(KotlinJsonAdapterFactory())
-                    .build()
-                //CREANDO INTERCEPTORES
-                val httpLoggingInterceptor =
-                    HttpLoggingInterceptor(HttpLoggingInterceptor.Logger.DEFAULT).apply {
-                        level = HttpLoggingInterceptor.Level.BODY
-                    }
-                //CREANDO HTTPCLIENT
-                val okHttpClient = OkHttpClient.Builder()
-                    .authenticator { _, response ->
-                        response.request.newBuilder()
-                            .header("Authorization", "Bearer $TAG_TOKEN").build()
-                    }
-                    .addInterceptor(httpLoggingInterceptor)
-                    .build()
-                //CREANDO RETROFIT
-                var retrofit = Retrofit.Builder()
-                    .baseUrl("https://dragonball.keepcoding.education")
-                    .client(okHttpClient)
-                    .addConverterFactory(MoshiConverterFactory.create(moshi))
-                    .build()
-                //CREANDO API
-                var api: DragonBallAPI = retrofit.create(DragonBallAPI::class.java)
-                val remoteDataSource = RemoteDataSourceImpl(api)
-
-                //CREO LOS MAPPERS
-                val remoteToLocalMapper = RemoteToLocalMapper()
-                val localToPresentationMapper = LocalToPresentationMapper()
-                val remoteToPresentationMapper = RemoteToPresentationMapper()
-
-                //CREANDO REPOSITORIO
-                val repository = RepositoryImpl(
-                    localDataSource,
-                    remoteDataSource,
-                    remoteToPresentationMapper,
-                    remoteToLocalMapper,
-                    localToPresentationMapper
-                )
-                return HeroesListViewModel(repository) as T
-            }
-        }
     }
 
     //OBTENER BOOTCAMPS
