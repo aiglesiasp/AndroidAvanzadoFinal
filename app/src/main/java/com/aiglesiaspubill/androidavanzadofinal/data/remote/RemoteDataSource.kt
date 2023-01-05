@@ -1,6 +1,5 @@
 package com.aiglesiaspubill.androidavanzadofinal.data.remote
 
-import com.aiglesiaspubill.androidavanzadofinal.data.remote.request.HerosRequest
 import com.aiglesiaspubill.androidavanzadofinal.data.remote.response.HeroRemote
 import com.aiglesiaspubill.androidavanzadofinal.domain.Bootcamp
 

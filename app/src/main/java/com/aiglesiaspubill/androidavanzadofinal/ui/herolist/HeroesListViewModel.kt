@@ -8,7 +8,6 @@ import androidx.room.Room
 import com.aiglesiaspubill.androidavanzadofinal.data.Repository
 import com.aiglesiaspubill.androidavanzadofinal.data.RepositoryImpl
 import com.aiglesiaspubill.androidavanzadofinal.data.local.HeroDatabase
-import com.aiglesiaspubill.androidavanzadofinal.data.local.LocalDataSource
 import com.aiglesiaspubill.androidavanzadofinal.data.local.LocalDataSourceImpl
 import com.aiglesiaspubill.androidavanzadofinal.data.mappers.LocalToPresentationMapper
 import com.aiglesiaspubill.androidavanzadofinal.data.mappers.RemoteToLocalMapper
@@ -37,73 +36,66 @@ class HeroesListViewModel(private val repository : Repository): ViewModel() {
         const val TAG_TOKEN = "eyJraWQiOiJwcml2YXRlIiwidHlwIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJpZGVudGlmeSI6IkM3QTZBRENFLUM3MjUtNDlFRi04MEFDLTMxNDVCODkxQzg5NCIsImV4cGlyYXRpb24iOjY0MDkyMjExMjAwLCJlbWFpbCI6ImFpZ2xlc2lhc3B1YmlsbEBnbWFpbC5jb20ifQ.NjSKR-UPBTVSNIKunr8QPjwUiZJcnUObOv0pYG28Avc"
         private val TAG = "HeroesListViewModel"
 
+        //AQUI ESTOY METIENDO TODAS LAS DEPENDECIAS
+        val Factory: ViewModelProvider.Factory = object : ViewModelProvider.Factory {
+            @Suppress("UNCHECKED_CAST")
+            override fun <T : ViewModel> create(
+                modelClass: Class<T>,
+                extras: CreationExtras
+            ): T {
+                //INICIAR CONEXION CON REPOSITORIO LOCAL
+                val application = checkNotNull(extras[APPLICATION_KEY])
+                val db = Room.databaseBuilder(application, HeroDatabase::class.java, "database-name").build()
+                val dao = db.getDAO()
+                val localDataSource = LocalDataSourceImpl(dao)
 
-    //AQUI ESTOY METIENDO TODAS LAS DEPENDECIAS
-    val Factory: ViewModelProvider.Factory = object : ViewModelProvider.Factory {
-        @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel> create(
-            modelClass: Class<T>,
-            extras: CreationExtras
-        ): T {
-            //INICIAR CONEXION CON REPOSITORIO LOCAL
-            val application = checkNotNull(extras[APPLICATION_KEY])
-            val db =
-                Room.databaseBuilder(application, HeroDatabase::class.java, "database-name").build()
-            val dao = db.getDAO()
-            val localDataSource = LocalDataSourceImpl(dao)
+                //INICIAR CONEXION CON REPOSITORIO REMOTO
+                // Crear conexion con APIDRAGONBALL
+                val moshi = Moshi.Builder()
+                    .addLast(KotlinJsonAdapterFactory())
+                    .build()
+                //CREANDO INTERCEPTORES
+                val httpLoggingInterceptor =
+                    HttpLoggingInterceptor(HttpLoggingInterceptor.Logger.DEFAULT).apply {
+                        level = HttpLoggingInterceptor.Level.BODY
+                    }
+                //CREANDO HTTPCLIENT
+                val okHttpClient = OkHttpClient.Builder()
+                    .authenticator { _, response ->
+                        response.request.newBuilder()
+                            .header("Authorization", "Bearer $TAG_TOKEN").build()
+                    }
+                    .addInterceptor(httpLoggingInterceptor)
+                    .build()
+                //CREANDO RETROFIT
+                var retrofit = Retrofit.Builder()
+                    .baseUrl("https://dragonball.keepcoding.education")
+                    .client(okHttpClient)
+                    .addConverterFactory(MoshiConverterFactory.create(moshi))
+                    .build()
+                //CREANDO API
+                var api: DragonBallAPI = retrofit.create(DragonBallAPI::class.java)
+                val remoteDataSource = RemoteDataSourceImpl(api)
 
+                //CREO LOS MAPPERS
+                val remoteToLocalMapper = RemoteToLocalMapper()
+                val localToPresentationMapper = LocalToPresentationMapper()
+                val remoteToPresentationMapper = RemoteToPresentationMapper()
 
-            //INICIAR CONEXION CON REPOSITORIO REMOTO
-            //Crear conexion con APIDRAGONBALL
-            val moshi = Moshi.Builder()
-                .addLast(KotlinJsonAdapterFactory())
-                .build()
-
-            //CREANDO INTERCEPTORES
-            val httpLoggingInterceptor =
-                HttpLoggingInterceptor(HttpLoggingInterceptor.Logger.DEFAULT).apply {
-                    level = HttpLoggingInterceptor.Level.BODY
-                }
-
-
-            val okHttpClient = OkHttpClient.Builder()
-                .authenticator { _, response ->
-                    response.request.newBuilder()
-                        .header("Authorization", "Bearer $TAG_TOKEN").build()
-                }
-                .addInterceptor(httpLoggingInterceptor)
-                .build()
-
-            //CREANDO RETROFIT
-            var retrofit = Retrofit.Builder()
-                .baseUrl("https://dragonball.keepcoding.education")
-                .client(okHttpClient)
-                .addConverterFactory(MoshiConverterFactory.create(moshi))
-                .build()
-
-            var api: DragonBallAPI = retrofit.create(DragonBallAPI::class.java)
-            val remoteDataSource = RemoteDataSourceImpl(api)
-
-            //CREO LOS MAPPERS
-            val remoteToLocalMapper = RemoteToLocalMapper()
-            val localToPresentationMapper = LocalToPresentationMapper()
-            val remoteToPresentationMapper = RemoteToPresentationMapper()
-
-
-            val repository = RepositoryImpl(
-                localDataSource,
-                remoteDataSource,
-                remoteToPresentationMapper,
-                remoteToLocalMapper,
-                localToPresentationMapper
-            )
-            return HeroesListViewModel(repository) as T
+                //CREANDO REPOSITORIO
+                val repository = RepositoryImpl(
+                    localDataSource,
+                    remoteDataSource,
+                    remoteToPresentationMapper,
+                    remoteToLocalMapper,
+                    localToPresentationMapper
+                )
+                return HeroesListViewModel(repository) as T
+            }
         }
     }
-    }
 
-
-    //obtener Bootcamps
+    //OBTENER BOOTCAMPS
     fun getBootcamps() {
         viewModelScope.launch {
             val bootcamps = withContext(Dispatchers.IO){
@@ -113,7 +105,7 @@ class HeroesListViewModel(private val repository : Repository): ViewModel() {
         }
     }
 
-    //Obtener heroes
+    //OBTENER HEROES
     fun getHeroes() {
         viewModelScope.launch {
             val heroes = withContext(Dispatchers.IO) {
@@ -121,7 +113,5 @@ class HeroesListViewModel(private val repository : Repository): ViewModel() {
             }
             _heros.value = heroes
         }
-
     }
-
 }

@@ -6,13 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.aiglesiaspubill.androidavanzadofinal.databinding.FragmentHeroListBinding
-import com.aiglesiaspubill.androidavanzadofinal.domain.Hero
-import com.aiglesiaspubill.androidavanzadofinal.ui.commons.CoroutineViewModel
 import com.aiglesiaspubill.androidavanzadofinal.ui.commons.HeroListAdapter
-import java.util.UUID
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.

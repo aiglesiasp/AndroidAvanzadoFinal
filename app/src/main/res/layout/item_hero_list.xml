@@ -25,7 +25,8 @@
             android:layout_height="wrap_content"
             android:padding="16dp"
             android:textSize="20sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:gravity="center"/>
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

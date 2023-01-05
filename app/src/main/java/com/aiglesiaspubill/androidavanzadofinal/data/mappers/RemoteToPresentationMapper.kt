@@ -6,12 +6,12 @@ import com.aiglesiaspubill.androidavanzadofinal.domain.Hero
 class RemoteToPresentationMapper {
 
     //MAPEAR LISTA DE HEROES DE REMOTO A PRESENTACION
-    fun map(heroList: List<HeroRemote>): List<Hero> {
-        return  heroList.map { map(it) }
+    fun map(heroListRemote: List<HeroRemote>): List<Hero> {
+        return  heroListRemote.map { map(it) }
     }
 
     //MAPEAR UN HEROE DE REMOTO A PRESENTACION
-    fun map(hero: HeroRemote): Hero {
-        return Hero(hero.id, hero.name, hero.photo)
+    fun map(heroRemote: HeroRemote): Hero {
+        return Hero(heroRemote.id, heroRemote.name, heroRemote.photo)
     }
 }

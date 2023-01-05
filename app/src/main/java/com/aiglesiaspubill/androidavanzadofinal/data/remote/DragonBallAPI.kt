@@ -3,10 +3,8 @@ package com.aiglesiaspubill.androidavanzadofinal.data.remote
 import com.aiglesiaspubill.androidavanzadofinal.data.remote.request.HerosRequest
 import com.aiglesiaspubill.androidavanzadofinal.data.remote.response.HeroRemote
 import com.aiglesiaspubill.androidavanzadofinal.domain.Bootcamp
-import com.aiglesiaspubill.androidavanzadofinal.domain.Hero
 import retrofit2.http.Body
 import retrofit2.http.GET
-import retrofit2.http.Headers
 import retrofit2.http.POST
 
 interface DragonBallAPI {
