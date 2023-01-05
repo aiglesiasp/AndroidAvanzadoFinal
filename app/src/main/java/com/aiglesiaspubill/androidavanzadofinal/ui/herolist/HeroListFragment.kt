@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.aiglesiaspubill.androidavanzadofinal.databinding.FragmentHeroListBinding
 import com.aiglesiaspubill.androidavanzadofinal.domain.Hero
@@ -26,7 +27,9 @@ class HeroListFragment : Fragment() {
 
     private val adapter = HeroListAdapter()
 
-    private val viewModel: HeroesListViewModel by viewModels()
+    private val viewModel: HeroesListViewModel by viewModels() {
+        HeroesListViewModel.Factory
+    }
 
 
 
@@ -50,7 +53,6 @@ class HeroListFragment : Fragment() {
             viewModel.heros.observe(viewLifecycleOwner) { heroList ->
                 adapter.submitList(heroList)
             }
-            viewModel.initDatabase(requireContext())
             viewModel.getHeroes()
         }
     }
