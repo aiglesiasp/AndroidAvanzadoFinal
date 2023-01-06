@@ -1,6 +1,7 @@
 package com.aiglesiaspubill.androidavanzadofinal.di
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import androidx.room.Room
@@ -8,6 +9,7 @@ import com.aiglesiaspubill.androidavanzadofinal.data.local.HeroDAO
 import com.aiglesiaspubill.androidavanzadofinal.data.local.HeroDatabase
 import com.aiglesiaspubill.androidavanzadofinal.data.remote.DragonBallAPI
 import com.aiglesiaspubill.androidavanzadofinal.ui.herolist.HeroesListViewModel
+import com.aiglesiaspubill.androidavanzadofinal.ui.login.LoginViewModel
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -27,6 +29,11 @@ object RemoteModule {
 
     private val TAG_TOKEN = "eyJraWQiOiJwcml2YXRlIiwidHlwIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJpZGVudGlmeSI6IkM3QTZBRENFLUM3MjUtNDlFRi04MEFDLTMxNDVCODkxQzg5NCIsImV4cGlyYXRpb24iOjY0MDkyMjExMjAwLCJlbWFpbCI6ImFpZ2xlc2lhc3B1YmlsbEBnbWFpbC5jb20ifQ.NjSKR-UPBTVSNIKunr8QPjwUiZJcnUObOv0pYG28Avc"
 
+    //NOS DA EL SHAREDPREFERENCES
+    @Provides
+    fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences {
+        return context.getSharedPreferences("NAME", Context.MODE_PRIVATE)
+    }
     //NOS DA EL HTTPLOGINGINTERCEPTOR
     @Provides
     fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
@@ -39,26 +46,25 @@ object RemoteModule {
 
     //NOS DA EL OKHTTPCLIENT
     @Provides
-    fun provideOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
+    fun provideOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor, sharedPreferences: SharedPreferences): OkHttpClient {
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor { chain ->
                 Log.d("AUTENTICADOR", "ENTRANDO EN EL INTERCEPTOR")
                 val originalRequest = chain.request()
                 val newRequest = originalRequest.newBuilder()
-                    //.header("Authorization", "Bearer $TAG_TOKEN")
                     .header("Content-Type", "Application/Json")
                     .build()
                 chain.proceed(newRequest)
             }
             .authenticator { _, response ->
-                Log.d("AUTENTICADOR", "${response.request.url} ${response.code}")
                 if(response.request.url.encodedPath.contains("api/auth/login")) {
                     response.request.newBuilder()
-                        .header("Authorization", "Basic ")
+                        .header("Authorization", "${sharedPreferences.getString("CREDENTIAL", null)}")
                         .build()
                 } else {
                     response.request.newBuilder()
-                        .header("Authorization", "Bearer $TAG_TOKEN").build()
+                        .header("Authorization", "Bearer ${sharedPreferences.getString("TOKEN", null)}")
+                        .build()
                 }
             }
             .addInterceptor(httpLoggingInterceptor)

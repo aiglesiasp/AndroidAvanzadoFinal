@@ -48,27 +48,18 @@ class HeroListFragment : Fragment() {
             heroList.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             heroList.adapter = adapter
 
-            viewModel.heros.observe(viewLifecycleOwner) { heroList ->
-                adapter.submitList(heroList)
-            }
-            viewModel.error.observe(viewLifecycleOwner) { error ->
-                Toast.makeText(requireContext(), error, Toast.LENGTH_LONG).show()
-            }
-
-            viewModel.state.observe((viewLifecycleOwner)) { state ->
-               when (state) {
-                   is HeroListState.Failure -> {
-                       Toast.makeText(requireContext(), state.error, Toast.LENGTH_LONG).show()
-                   }
-                   is HeroListState.Succes -> {
-                       adapter.submitList(state.heros)
-                   }
-                   is HeroListState.NetworkError -> {
-
-                   }
-               }
-            }
+            observeHeroesListState()
             viewModel.getHeroes()
+        }
+    }
+
+    private fun observeHeroesListState() {
+        viewModel.stateHeroes.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is HeroListState.Failure -> Toast.makeText(requireContext(), state.error, Toast.LENGTH_LONG).show()
+                is HeroListState.Succes -> adapter.submitList(state.heros)
+                is HeroListState.NetworkError -> println("NETWORK ERROR")
+            }
         }
     }
 
