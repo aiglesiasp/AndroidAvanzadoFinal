@@ -1,6 +1,7 @@
 package com.aiglesiaspubill.androidavanzadofinal.di
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import androidx.room.Room
 import com.aiglesiaspubill.androidavanzadofinal.data.local.HeroDAO
@@ -41,15 +42,24 @@ object RemoteModule {
     fun provideOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor { chain ->
+                Log.d("AUTENTICADOR", "ENTRANDO EN EL INTERCEPTOR")
                 val originalRequest = chain.request()
                 val newRequest = originalRequest.newBuilder()
+                    //.header("Authorization", "Bearer $TAG_TOKEN")
                     .header("Content-Type", "Application/Json")
                     .build()
                 chain.proceed(newRequest)
             }
             .authenticator { _, response ->
-                response.request.newBuilder()
-                    .header("Authorization", "Bearer $TAG_TOKEN").build()
+                Log.d("AUTENTICADOR", "${response.request.url} ${response.code}")
+                if(response.request.url.encodedPath.contains("api/auth/login")) {
+                    response.request.newBuilder()
+                        .header("Authorization", "Basic ")
+                        .build()
+                } else {
+                    response.request.newBuilder()
+                        .header("Authorization", "Bearer $TAG_TOKEN").build()
+                }
             }
             .addInterceptor(httpLoggingInterceptor)
             .build()
@@ -71,7 +81,7 @@ object RemoteModule {
         var retrofit = Retrofit.Builder()
             .baseUrl("https://dragonball.keepcoding.education")
             .client(okHttpClient)
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .addConverterFactory(MoshiConverterFactory.create(moshi).asLenient())
             .build()
         return retrofit
     }

@@ -19,18 +19,23 @@ class RepositoryImpl @Inject constructor(private val localDataSource: LocalDataS
 
                  ): Repository {
 
-    //Obtener bootcamps
+    //1-LOGIN
+    override suspend fun getLogin(): String {
+        // Hay que hacer el LOGIN
+        return ""
+    }
+    //2-BOOTCAMPS
     override suspend fun getBootcamps(): List<Bootcamp> {
         return remoteDataSource.getBootcamps()
     }
 
-    //Obtener heroes -- NO LO NECESITARE-- SE PODRA BORRAR
+    //3-OBTENER HEROES -- NO LO NECESITARE-- SE PODRA BORRAR
     override suspend fun getHeroes(): List<Hero> {
         val remoteHero = remoteDataSource.getHeroes()
         return remoteToPresentationMapper.map(remoteHero)
     }
 
-    //Obtener heroes
+    //4-OBTENER HEROES MIRANDO LOCAL
     override suspend fun getHeroesWithCache(): List<Hero> {
         //1-Pido datos a local
         val localHeroList = localDataSource.getHeroes()
@@ -47,4 +52,5 @@ class RepositoryImpl @Inject constructor(private val localDataSource: LocalDataS
 
 
     }
+
 }
