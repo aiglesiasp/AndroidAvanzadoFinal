@@ -6,4 +6,5 @@ import com.aiglesiaspubill.androidavanzadofinal.domain.Bootcamp
 interface RemoteDataSource {
     suspend fun getBootcamps(): List<Bootcamp>
     suspend fun getHeroes(): List<HeroRemote>
+    suspend fun getHerosWithException(): Result<List<HeroRemote>>
 }

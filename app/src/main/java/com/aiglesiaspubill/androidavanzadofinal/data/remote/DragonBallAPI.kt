@@ -17,6 +17,10 @@ interface DragonBallAPI {
     @GET("/api/data/bootcamps")
     suspend fun getBootcamps(): List<Bootcamp>
 
+    //LLAMADA A HEROES DE LA API DE DRAGONBALL CON EXCEPCION
+    @POST("/api/heros/all")
+    suspend fun getHerosWithException(): List<HeroRemote>
+
     //LLAMADA A HEROES DE LA API DE DRAGONBALL
     @POST("/api/heros/all")
     suspend fun getHeros(@Body herosRequest: HerosRequest): List<HeroRemote>

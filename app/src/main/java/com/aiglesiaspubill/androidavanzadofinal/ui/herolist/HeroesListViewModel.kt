@@ -1,38 +1,35 @@
 package com.aiglesiaspubill.androidavanzadofinal.ui.herolist
 
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.*
-import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
-import androidx.lifecycle.viewmodel.CreationExtras
-import androidx.room.Room
+import com.aiglesiaspubill.androidavanzadofinal.data.HeroListState
 import com.aiglesiaspubill.androidavanzadofinal.data.Repository
-import com.aiglesiaspubill.androidavanzadofinal.data.RepositoryImpl
-import com.aiglesiaspubill.androidavanzadofinal.data.local.HeroDatabase
-import com.aiglesiaspubill.androidavanzadofinal.data.local.LocalDataSourceImpl
-import com.aiglesiaspubill.androidavanzadofinal.data.mappers.LocalToPresentationMapper
-import com.aiglesiaspubill.androidavanzadofinal.data.mappers.RemoteToLocalMapper
 import com.aiglesiaspubill.androidavanzadofinal.data.mappers.RemoteToPresentationMapper
-import com.aiglesiaspubill.androidavanzadofinal.data.remote.DragonBallAPI
-import com.aiglesiaspubill.androidavanzadofinal.data.remote.RemoteDataSourceImpl
 import com.aiglesiaspubill.androidavanzadofinal.domain.Hero
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Inject
 
 @HiltViewModel
-class HeroesListViewModel @Inject constructor(private val repository : Repository): ViewModel() {
+class HeroesListViewModel @Inject constructor(
+    private val repository : Repository,
+    private val remoteToPresentationMapper: RemoteToPresentationMapper
+): ViewModel() {
 
     private val _heros = MutableLiveData<List<Hero>>()
     val heros: LiveData<List<Hero>>
         get() = _heros
+
+    private val _error = MutableLiveData<String>()
+    val error: LiveData<String>
+        get() = _error
+
+    private val _state = MutableLiveData<HeroListState>()
+    val state: LiveData<HeroListState>
+        get() = _state
 
     //INICIAR CONEXION CON REPOSITORIO REMOTO
     companion object {
@@ -53,9 +50,22 @@ class HeroesListViewModel @Inject constructor(private val repository : Repositor
     fun getHeroes() {
         viewModelScope.launch {
             val heroes = withContext(Dispatchers.IO) {
-                repository.getHeroesWithCache()
+                    repository.getHeroesWithCache()
             }
             _heros.value = heroes
         }
     }
+
+    //OBTENER HEROES
+    fun getHeroesWithException() {
+        viewModelScope.launch {
+            val heroesListState = withContext(Dispatchers.IO) {
+                repository.getHeroesWithException()
+            }
+
+            _state.value = heroesListState
+        }
+    }
+
+
 }

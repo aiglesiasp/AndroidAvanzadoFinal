@@ -1,14 +1,13 @@
 package com.aiglesiaspubill.androidavanzadofinal.data
 
 import com.aiglesiaspubill.androidavanzadofinal.data.local.LocalDataSource
-import com.aiglesiaspubill.androidavanzadofinal.data.local.LocalDataSourceImpl
 import com.aiglesiaspubill.androidavanzadofinal.data.mappers.LocalToPresentationMapper
 import com.aiglesiaspubill.androidavanzadofinal.data.mappers.RemoteToLocalMapper
 import com.aiglesiaspubill.androidavanzadofinal.data.mappers.RemoteToPresentationMapper
 import com.aiglesiaspubill.androidavanzadofinal.data.remote.RemoteDataSource
-import com.aiglesiaspubill.androidavanzadofinal.data.remote.RemoteDataSourceImpl
 import com.aiglesiaspubill.androidavanzadofinal.domain.Bootcamp
 import com.aiglesiaspubill.androidavanzadofinal.domain.Hero
+import retrofit2.HttpException
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(private val localDataSource: LocalDataSource,
@@ -53,4 +52,19 @@ class RepositoryImpl @Inject constructor(private val localDataSource: LocalDataS
 
     }
 
+    override suspend fun getHeroesWithException(): HeroListState {
+        val result = remoteDataSource.getHerosWithException()
+        return when {
+            result.isSuccess -> HeroListState.Succes(remoteToPresentationMapper.map(result.getOrThrow()))
+            else -> {
+                val exception = result.exceptionOrNull()
+                when (exception) {
+                    is HttpException -> HeroListState.NetworkError(exception.code())
+                    else -> {
+                        HeroListState.Failure(result.exceptionOrNull()?.message)
+                    }
+                }
+            }
+        }
+    }
 }
