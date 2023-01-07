@@ -6,6 +6,7 @@ import com.aiglesiaspubill.androidavanzadofinal.data.mappers.Mappers
 import com.aiglesiaspubill.androidavanzadofinal.data.remote.RemoteDataSource
 import com.aiglesiaspubill.androidavanzadofinal.data.remote.response.HeroRemote
 import com.aiglesiaspubill.androidavanzadofinal.domain.Hero
+import com.aiglesiaspubill.androidavanzadofinal.domain.Location
 import com.aiglesiaspubill.androidavanzadofinal.ui.detail.DetailState
 import com.aiglesiaspubill.androidavanzadofinal.ui.herolist.HeroListState
 import com.aiglesiaspubill.androidavanzadofinal.ui.login.LoginState
@@ -77,5 +78,15 @@ class RepositoryImpl @Inject constructor(private val localDataSource: LocalDataS
                 }
             }
         }
+    }
+
+    //OBTENER LOCALIZACIONES
+    override suspend fun getLocations(heroId: String): List<Location> {
+        val locations = remoteDataSource.getLocations(heroId)
+        locations.onSuccess {
+            //Devolver un mapper con las localizaciones
+            return mappers.mapRemoteLocationsToLocations(it)
+        }
+        return emptyList()
     }
 }

@@ -1,5 +1,6 @@
 package com.aiglesiaspubill.androidavanzadofinal.ui.detail
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.aiglesiaspubill.androidavanzadofinal.ui.herolist.HeroListState
 import com.aiglesiaspubill.androidavanzadofinal.data.Repository
@@ -34,6 +35,19 @@ class DetailViewModel @Inject constructor(
         viewModelScope.launch {
             val stateDetail = withContext(Dispatchers.IO) {
                 repository.getHeroDetail(name)
+            }
+            //OBTENER LAS LOCALIZACIONES
+            when(stateDetail) {
+                is DetailState.Failure -> Log.d("LOCATIONS","Error al buscar localizaciones")
+                is DetailState.NetworkError -> Log.d("LOCATIONS","Error Network")
+                is DetailState.Succes -> {
+                    val hero = stateDetail.hero
+                    val locations = withContext(Dispatchers.IO) {
+                        //LLAMAR A LAS LOCALIZACIONES EN EL REPOSITORIO
+                        repository.getLocations(hero.id)
+                    }
+                    hero.locations = locations
+                }
             }
             setValueOnMainThread(stateDetail)
         }

@@ -12,6 +12,7 @@ import androidx.navigation.fragment.navArgs
 import coil.load
 import com.aiglesiaspubill.androidavanzadofinal.R
 import com.aiglesiaspubill.androidavanzadofinal.databinding.FragmentHeroDetailBinding
+import com.aiglesiaspubill.androidavanzadofinal.domain.Hero
 import com.aiglesiaspubill.androidavanzadofinal.ui.herolist.HeroListState
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -58,13 +59,19 @@ class HeroDetailFragment : Fragment() {
                     Toast.LENGTH_LONG
                 ).show()
                 is DetailState.Succes -> {
-                    binding.nameHeroDetail.text = state.hero.name
-                    binding.descriptionHeroDetail.text = state.hero.description
-                    binding.imageHeroDetail.load(state.hero.photo)
+                   setHero(state.hero)
                 }
                 is DetailState.NetworkError -> println("NETWORK ERROR")
             }
         }
+    }
+
+    //PINTAR HEROE NE PANTALLA
+    private fun setHero(hero: Hero) {
+        binding.nameHeroDetail.text = hero.name
+        binding.descriptionHeroDetail.text = hero.description
+        binding.imageHeroDetail.load(hero.photo)
+        //binding.textViewLocations.text = hero.locations?.first().toString()
     }
 
     override fun onDestroyView() {

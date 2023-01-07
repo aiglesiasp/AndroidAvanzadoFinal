@@ -2,7 +2,9 @@ package com.aiglesiaspubill.androidavanzadofinal.data.mappers
 
 import com.aiglesiaspubill.androidavanzadofinal.data.local.model.HeroLocal
 import com.aiglesiaspubill.androidavanzadofinal.data.remote.response.HeroRemote
+import com.aiglesiaspubill.androidavanzadofinal.data.remote.response.LocationRemote
 import com.aiglesiaspubill.androidavanzadofinal.domain.Hero
+import com.aiglesiaspubill.androidavanzadofinal.domain.Location
 import javax.inject.Inject
 
 class Mappers @Inject constructor() {
@@ -12,7 +14,7 @@ class Mappers @Inject constructor() {
         return  heroListLocal.map { mapLocalToPresentationOneHero(it) }
     }
     fun mapLocalToPresentationOneHero(heroLocal: HeroLocal): Hero {
-        return Hero(heroLocal.id, heroLocal.name, heroLocal.photo, heroLocal.description)
+        return Hero(heroLocal.id, heroLocal.name, heroLocal.photo, heroLocal.description, heroLocal.favorite)
     }
 
 
@@ -21,7 +23,7 @@ class Mappers @Inject constructor() {
         return  heroListRemote.map { mapRemoteToPresentationOneHero(it) }
     }
     fun mapRemoteToPresentationOneHero(heroRemote: HeroRemote): Hero {
-        return Hero(heroRemote.id, heroRemote.name, heroRemote.photo, heroRemote.description)
+        return Hero(heroRemote.id, heroRemote.name, heroRemote.photo, heroRemote.description, heroRemote.favorite)
     }
 
 
@@ -39,6 +41,14 @@ class Mappers @Inject constructor() {
     }
     fun mapPresentationToLocalOneHero(hero: Hero): HeroLocal {
         return HeroLocal(hero.id, hero.name, hero.photo, "", false)
+    }
+
+    fun mapRemoteLocationsToLocations(remoteLocations: List<LocationRemote>): List<Location> {
+        return remoteLocations.map { mapRemoteLocationsToLocationsOneLocation(it) }
+    }
+
+    fun mapRemoteLocationsToLocationsOneLocation(location: LocationRemote): Location {
+        return Location(location.id, location.longitud, location.latitud, location.dateShow)
     }
 
     //REMOTO A ENTIDAD LIVE STATE
