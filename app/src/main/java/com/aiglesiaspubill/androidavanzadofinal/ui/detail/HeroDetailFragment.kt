@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import coil.load
 import com.aiglesiaspubill.androidavanzadofinal.R
 import com.aiglesiaspubill.androidavanzadofinal.databinding.FragmentHeroDetailBinding
 import com.aiglesiaspubill.androidavanzadofinal.ui.herolist.HeroListState
@@ -57,7 +58,9 @@ class HeroDetailFragment : Fragment() {
                     Toast.LENGTH_LONG
                 ).show()
                 is DetailState.Succes -> {
-                    binding.heroName.text = state.hero.name
+                    binding.nameHeroDetail.text = state.hero.name
+                    binding.descriptionHeroDetail.text = state.hero.description
+                    binding.imageHeroDetail.load(state.hero.photo)
                 }
                 is DetailState.NetworkError -> println("NETWORK ERROR")
             }

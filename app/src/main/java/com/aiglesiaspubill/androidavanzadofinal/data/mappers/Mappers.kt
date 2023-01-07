@@ -12,7 +12,7 @@ class Mappers @Inject constructor() {
         return  heroListLocal.map { mapLocalToPresentationOneHero(it) }
     }
     fun mapLocalToPresentationOneHero(heroLocal: HeroLocal): Hero {
-        return Hero(heroLocal.id, heroLocal.name, heroLocal.photo)
+        return Hero(heroLocal.id, heroLocal.name, heroLocal.photo, heroLocal.description)
     }
 
 
@@ -21,7 +21,7 @@ class Mappers @Inject constructor() {
         return  heroListRemote.map { mapRemoteToPresentationOneHero(it) }
     }
     fun mapRemoteToPresentationOneHero(heroRemote: HeroRemote): Hero {
-        return Hero(heroRemote.id, heroRemote.name, heroRemote.photo)
+        return Hero(heroRemote.id, heroRemote.name, heroRemote.photo, heroRemote.description)
     }
 
 
