@@ -13,7 +13,14 @@ class RemoteDataSourceImpl @Inject constructor(private val api: DragonBallAPI) :
         return runCatching { api.getHeros(HerosRequest()) }
     }
 
+    //OBTENER TOKEN
     override suspend fun getToken(): Result<String> {
         return runCatching { api.getToken() }
     }
+
+    //OBTENER HEROES DETAIL
+    override suspend fun getHeroDetail(name: String): Result<HeroRemote?>{
+        return kotlin.runCatching { api.getHerosDetail(HerosRequest(name)).firstOrNull() }
+    }
+
 }

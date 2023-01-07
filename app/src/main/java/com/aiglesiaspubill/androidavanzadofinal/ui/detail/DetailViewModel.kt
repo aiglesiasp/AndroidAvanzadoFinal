@@ -14,28 +14,28 @@ class DetailViewModel @Inject constructor(
     private val repository : Repository,
 ): ViewModel() {
 
-    private val _stateHeroes = MutableLiveData<HeroListState>()
-    val stateHeroes: LiveData<HeroListState>
-        get() = _stateHeroes
+    private val _stateDetail = MutableLiveData<DetailState>()
+    val stateDetail: LiveData<DetailState>
+        get() = _stateDetail
 
     //INICIAR CONEXION CON REPOSITORIO REMOTO
     companion object {
-        private val TAG = "HeroesListViewModel"
+        private val TAG = "DetailViewModel"
     }
 
-    private fun setValueOnMainThread(value: HeroListState) {
+    private fun setValueOnMainThread(value: DetailState) {
         viewModelScope.launch(Dispatchers.Main) {
-            _stateHeroes.value = value
+            _stateDetail.value = value
         }
     }
 
     //OBTENER HEROES
-    fun getHeroes() {
+    fun getHeroDetail(name: String) {
         viewModelScope.launch {
-            val heroesListState = withContext(Dispatchers.IO) {
-                repository.getHeroesWithCache()
+            val stateDetail = withContext(Dispatchers.IO) {
+                repository.getHeroDetail(name)
             }
-            setValueOnMainThread(heroesListState)
+            setValueOnMainThread(stateDetail)
         }
     }
 

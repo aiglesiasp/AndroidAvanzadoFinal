@@ -6,4 +6,5 @@ import com.aiglesiaspubill.androidavanzadofinal.domain.Bootcamp
 interface RemoteDataSource {
     suspend fun getHeros(): Result<List<HeroRemote>>
     suspend fun getToken(): Result<String>
+    suspend fun getHeroDetail(name: String): Result<HeroRemote?>
 }

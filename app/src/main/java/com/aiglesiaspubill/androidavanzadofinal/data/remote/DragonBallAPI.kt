@@ -17,4 +17,8 @@ interface DragonBallAPI {
     @POST("/api/heros/all")
     suspend fun getHeros(@Body herosRequest: HerosRequest): List<HeroRemote>
 
+    //LLAMADA A HEROES DE LA API DE DRAGONBALL CON EXCEPCION
+    @POST("/api/heros/all")
+    suspend fun getHerosDetail(@Body herosRequest: HerosRequest): List<HeroRemote>
+
 }
