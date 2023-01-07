@@ -1,6 +1,4 @@
-package com.aiglesiaspubill.androidavanzadofinal.data
-
-import com.aiglesiaspubill.androidavanzadofinal.domain.Hero
+package com.aiglesiaspubill.androidavanzadofinal.ui.login
 
 sealed class LoginState {
     data class Succes(val token: String) : LoginState()

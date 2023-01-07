@@ -4,7 +4,8 @@ import android.content.SharedPreferences
 import com.aiglesiaspubill.androidavanzadofinal.data.local.LocalDataSource
 import com.aiglesiaspubill.androidavanzadofinal.data.mappers.Mappers
 import com.aiglesiaspubill.androidavanzadofinal.data.remote.RemoteDataSource
-import retrofit2.HttpException
+import com.aiglesiaspubill.androidavanzadofinal.ui.herolist.HeroListState
+import com.aiglesiaspubill.androidavanzadofinal.ui.login.LoginState
 import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(private val localDataSource: LocalDataSource,

@@ -1,7 +1,7 @@
 package com.aiglesiaspubill.androidavanzadofinal.data
 
-import com.aiglesiaspubill.androidavanzadofinal.domain.Bootcamp
-import com.aiglesiaspubill.androidavanzadofinal.domain.Hero
+import com.aiglesiaspubill.androidavanzadofinal.ui.herolist.HeroListState
+import com.aiglesiaspubill.androidavanzadofinal.ui.login.LoginState
 
 interface Repository {
     suspend fun getHeroes(): HeroListState

@@ -1,4 +1,4 @@
-package com.aiglesiaspubill.androidavanzadofinal.data
+package com.aiglesiaspubill.androidavanzadofinal.ui.herolist
 
 import com.aiglesiaspubill.androidavanzadofinal.domain.Hero
 

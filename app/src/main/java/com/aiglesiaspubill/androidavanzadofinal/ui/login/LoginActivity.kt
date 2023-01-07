@@ -5,11 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
-import com.aiglesiaspubill.androidavanzadofinal.data.LoginState
 import com.aiglesiaspubill.androidavanzadofinal.databinding.ActivityLoginBinding
 import com.aiglesiaspubill.androidavanzadofinal.ui.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.MainScope
 
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {

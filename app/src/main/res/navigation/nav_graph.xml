@@ -3,26 +3,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/HeroeListFragment">
 
     <fragment
-        android:id="@+id/FirstFragment"
+        android:id="@+id/HeroeListFragment"
         android:name="com.aiglesiaspubill.androidavanzadofinal.ui.herolist.HeroListFragment"
         android:label="@string/hero_list_fragment_label"
         tools:layout="@layout/fragment_hero_list">
 
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_HeroeListFragment_to_DetailFragment"
+            app:destination="@id/DetailFragment" />
     </fragment>
     <fragment
-        android:id="@+id/SecondFragment"
+        android:id="@+id/DetailFragment"
         android:name="com.aiglesiaspubill.androidavanzadofinal.ui.detail.HeroDetailFragment"
         android:label="@string/hero_detail_fragment_label"
         tools:layout="@layout/fragment_hero_detail">
 
-        <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+        <argument
+            android:name="hero"
+            app:nullable="false"
+            app:argType="com.aiglesiaspubill.androidavanzadofinal.domain.Hero" />
     </fragment>
 </navigation>

@@ -1,6 +1,7 @@
-package com.aiglesiaspubill.androidavanzadofinal.ui.herolist
+package com.aiglesiaspubill.androidavanzadofinal.ui.detail
 
 import androidx.lifecycle.*
+import com.aiglesiaspubill.androidavanzadofinal.ui.herolist.HeroListState
 import com.aiglesiaspubill.androidavanzadofinal.data.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -9,7 +10,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class HeroesListViewModel @Inject constructor(
+class DetailViewModel @Inject constructor(
     private val repository : Repository,
 ): ViewModel() {
 
