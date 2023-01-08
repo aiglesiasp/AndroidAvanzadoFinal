@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
-    //PARA NAEVAGR POR EL GRAFO DE DATOS
+    //PARA NAVEGARR POR EL GRAFO DE DATOS
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration)

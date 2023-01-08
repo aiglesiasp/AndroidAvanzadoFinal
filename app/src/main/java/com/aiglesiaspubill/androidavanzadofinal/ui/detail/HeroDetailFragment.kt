@@ -7,13 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.load
 import com.aiglesiaspubill.androidavanzadofinal.R
 import com.aiglesiaspubill.androidavanzadofinal.databinding.FragmentHeroDetailBinding
 import com.aiglesiaspubill.androidavanzadofinal.domain.Hero
-import com.aiglesiaspubill.androidavanzadofinal.ui.herolist.HeroListState
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -77,10 +75,6 @@ class HeroDetailFragment : Fragment() {
 
     //PINTAR LOCALIZACIONES HEROE
     private fun setHeroLocations(hero: Hero) {
-        val pos = 0
-        for (i in 0..(hero.locations?.size ?: 0)) {
-
-        }
         binding.locationsDateShow.text = "FECHA: ${hero.locations?.first()?.dateShow}"
         binding.locationsLatitud.text = "LATITUD: ${hero.locations?.first()?.latitud}"
         binding.locationsLongitud.text = "LONGITUD: ${hero.locations?.first()?.longitud}"
@@ -98,7 +92,7 @@ class HeroDetailFragment : Fragment() {
     private fun setListeners(hero: Hero) {
         with(binding) {
             buttonFavorite.setOnClickListener {
-                viewModel.getFavorite()
+                viewModel.changeFavorite()
             }
         }
         setHeroFavorite(hero)

@@ -11,5 +11,5 @@ interface Repository {
     suspend fun getToken(): LoginState
     suspend fun getHeroDetail(name: String): DetailState
     suspend fun getLocations(heroId: String): List<Location>
-    suspend fun getFavorite(id: String)
+    suspend fun changeFavorite(id: String)
 }

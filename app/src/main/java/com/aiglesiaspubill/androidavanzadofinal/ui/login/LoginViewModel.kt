@@ -64,13 +64,11 @@ class LoginViewModel @Inject constructor(private val repository: Repository, pri
         setValueOnMainThread(LoginState.loading)
 
         //COMPROBAR LOGIN y USUARIO
-        val checkUser = checkUser(user)
-        val checkPass = checkPassword(pass)
-        if (!checkUser) {
+        if (!checkUser(user)) {
             setValueOnMainThread(LoginState.Failure("Error en Usuario"))
             return
         }
-        if(!checkPass){
+        if(!checkPassword(pass)){
             setValueOnMainThread(LoginState.Failure("Error en Contrasenya"))
             return
         }

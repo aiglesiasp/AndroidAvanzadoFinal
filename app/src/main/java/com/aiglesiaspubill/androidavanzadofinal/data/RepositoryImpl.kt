@@ -4,8 +4,6 @@ import android.content.SharedPreferences
 import com.aiglesiaspubill.androidavanzadofinal.data.local.LocalDataSource
 import com.aiglesiaspubill.androidavanzadofinal.data.mappers.Mappers
 import com.aiglesiaspubill.androidavanzadofinal.data.remote.RemoteDataSource
-import com.aiglesiaspubill.androidavanzadofinal.data.remote.response.HeroRemote
-import com.aiglesiaspubill.androidavanzadofinal.domain.Hero
 import com.aiglesiaspubill.androidavanzadofinal.domain.Location
 import com.aiglesiaspubill.androidavanzadofinal.ui.detail.DetailState
 import com.aiglesiaspubill.androidavanzadofinal.ui.herolist.HeroListState
@@ -17,7 +15,6 @@ class RepositoryImpl @Inject constructor(private val localDataSource: LocalDataS
                                          private val remoteDataSource: RemoteDataSource,
                                          private val mappers: Mappers,
                                          private val sharedPreferences: SharedPreferences
-
                  ): Repository {
 
     companion object {
@@ -91,7 +88,7 @@ class RepositoryImpl @Inject constructor(private val localDataSource: LocalDataS
     }
 
     //OBTENER EL FAVORITO
-    override suspend fun getFavorite(id: String) {
-        remoteDataSource.getFavorite(id)
+    override suspend fun changeFavorite(id: String) {
+        remoteDataSource.changeFavorite(id)
     }
 }

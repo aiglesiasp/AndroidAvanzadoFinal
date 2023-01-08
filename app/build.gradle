@@ -65,14 +65,21 @@ dependencies {
     //PARA LOCAL DATA SOURCE - ROOM
     implementation 'androidx.room:room-runtime:2.4.3'
     implementation 'androidx.room:room-ktx:2.4.3'
+    implementation 'androidx.test:core-ktx:1.4.0'
     kapt 'androidx.room:room-compiler:2.4.3'
 
     //DAGGER HILT
     implementation 'com.google.dagger:hilt-android:2.44'
     kapt 'com.google.dagger:hilt-android-compiler:2.44'
 
-
+    //TESTING
     testImplementation 'junit:junit:4.13.2'
+    testImplementation("io.mockk:mockk:1.12.2")
+    testImplementation("androidx.arch.core:core-testing:2.1.0")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.0")
+    testImplementation("com.google.truth:truth:1.0")
+
+
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
 }

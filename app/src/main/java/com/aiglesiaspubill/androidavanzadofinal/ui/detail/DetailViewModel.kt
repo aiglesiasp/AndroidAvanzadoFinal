@@ -2,10 +2,7 @@ package com.aiglesiaspubill.androidavanzadofinal.ui.detail
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.aiglesiaspubill.androidavanzadofinal.ui.herolist.HeroListState
 import com.aiglesiaspubill.androidavanzadofinal.data.Repository
-import com.aiglesiaspubill.androidavanzadofinal.data.remote.response.LocationRemote
-import com.aiglesiaspubill.androidavanzadofinal.domain.Location
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -56,12 +53,12 @@ class DetailViewModel @Inject constructor(
     }
 
     //OBTENER FAVORITOS
-    fun getFavorite() {
+    fun changeFavorite() {
         val stateDetail = stateDetail.value as DetailState.Succes
         val hero = stateDetail.hero
         hero.favorite =!hero.favorite
         viewModelScope.launch {
-            repository.getFavorite(hero.id)
+            repository.changeFavorite(hero.id)
         }
         setValueOnMainThread(stateDetail)
     }

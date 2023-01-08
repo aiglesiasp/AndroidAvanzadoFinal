@@ -28,6 +28,6 @@ interface DragonBallAPI {
 
     //LLAMADA A HEROES DE LA API DE DRAGONBALL CON EXCEPCION
     @POST("/api/data/herolike")
-    suspend fun getFavorite(@Body favoriteRequest: FavoriteRequest)
+    suspend fun changeFavorite(@Body favoriteRequest: FavoriteRequest)
 
 }

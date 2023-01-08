@@ -29,8 +29,8 @@ class RemoteDataSourceImpl @Inject constructor(private val api: DragonBallAPI) :
         return runCatching { api.getLocations(LocationRequest(heroId)) }
     }
 
-    override suspend fun getFavorite(id: String) {
-       kotlin.runCatching { api.getFavorite(FavoriteRequest(id)) }
+    override suspend fun changeFavorite(id: String) {
+       kotlin.runCatching { api.changeFavorite(FavoriteRequest(id)) }
     }
 
 }
