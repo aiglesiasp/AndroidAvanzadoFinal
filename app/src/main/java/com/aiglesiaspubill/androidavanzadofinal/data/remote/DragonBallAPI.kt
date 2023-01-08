@@ -1,5 +1,6 @@
 package com.aiglesiaspubill.androidavanzadofinal.data.remote
 
+import com.aiglesiaspubill.androidavanzadofinal.data.remote.request.FavoriteRequest
 import com.aiglesiaspubill.androidavanzadofinal.data.remote.request.HerosRequest
 import com.aiglesiaspubill.androidavanzadofinal.data.remote.request.LocationRequest
 import com.aiglesiaspubill.androidavanzadofinal.data.remote.response.HeroRemote
@@ -24,5 +25,9 @@ interface DragonBallAPI {
     //LLAMADA A HEROES DE LA API DE DRAGONBALL CON EXCEPCION
     @POST("/api/heros/locations")
     suspend fun getLocations(@Body locationRequest: LocationRequest): List<LocationRemote>
+
+    //LLAMADA A HEROES DE LA API DE DRAGONBALL CON EXCEPCION
+    @POST("/api/data/herolike")
+    suspend fun getFavorite(@Body favoriteRequest: FavoriteRequest)
 
 }

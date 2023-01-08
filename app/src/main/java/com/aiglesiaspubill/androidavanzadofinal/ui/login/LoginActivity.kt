@@ -33,11 +33,7 @@ class LoginActivity : AppCompatActivity() {
                 val user: String = binding.editTextName.text.toString()
                 val pass: String = binding.editTextPassword.text.toString()
                 //LLAMAREMOS AL VIEWMODEL PARA QUE HAGA EL LOGIN
-                if(user.isEmpty() || pass.isEmpty()) {
-                    Toast.makeText(this@LoginActivity,"ERROR EN USUARIO y/o PASSWORD",Toast.LENGTH_LONG).show()
-                } else {
-                    viewModel.login(user, pass)
-                }
+                viewModel.login(user, pass)
             }
         }
 
@@ -47,10 +43,9 @@ class LoginActivity : AppCompatActivity() {
     private fun observeLoginState() {
         viewModel.stateLogin.observe(this) {
             when(it) {
-                is LoginState.Failure -> Toast.makeText(this, "Error en el LOGIN", Toast.LENGTH_LONG).show()
+                is LoginState.Failure -> Toast.makeText(this, it.error, Toast.LENGTH_LONG).show()
                 is LoginState.NetworkError -> Toast.makeText(this, "Error de otro tipo en el LOGIN", Toast.LENGTH_LONG).show()
                 is LoginState.Succes -> {
-                    Toast.makeText(this, "LOGIN COMPLETADO CORRECTAMENTE", Toast.LENGTH_LONG).show()
                     val intent = Intent(this@LoginActivity, MainActivity::class.java)
                     startActivity(intent)
                 }

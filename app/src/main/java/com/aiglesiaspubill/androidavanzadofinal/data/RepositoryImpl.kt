@@ -89,4 +89,9 @@ class RepositoryImpl @Inject constructor(private val localDataSource: LocalDataS
         }
         return emptyList()
     }
+
+    //OBTENER EL FAVORITO
+    override suspend fun getFavorite(id: String) {
+        remoteDataSource.getFavorite(id)
+    }
 }

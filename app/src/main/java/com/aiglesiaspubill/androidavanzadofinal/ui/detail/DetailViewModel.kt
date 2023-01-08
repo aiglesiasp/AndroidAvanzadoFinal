@@ -55,5 +55,14 @@ class DetailViewModel @Inject constructor(
         }
     }
 
-
+    //OBTENER FAVORITOS
+    fun getFavorite() {
+        val stateDetail = stateDetail.value as DetailState.Succes
+        val hero = stateDetail.hero
+        hero.favorite =!hero.favorite
+        viewModelScope.launch {
+            repository.getFavorite(hero.id)
+        }
+        setValueOnMainThread(stateDetail)
+    }
 }

@@ -1,5 +1,6 @@
 package com.aiglesiaspubill.androidavanzadofinal.data.remote
 
+import com.aiglesiaspubill.androidavanzadofinal.data.remote.request.FavoriteRequest
 import com.aiglesiaspubill.androidavanzadofinal.data.remote.request.HerosRequest
 import com.aiglesiaspubill.androidavanzadofinal.data.remote.request.LocationRequest
 import com.aiglesiaspubill.androidavanzadofinal.data.remote.response.HeroRemote
@@ -28,4 +29,9 @@ class RemoteDataSourceImpl @Inject constructor(private val api: DragonBallAPI) :
         return runCatching { api.getLocations(LocationRequest(heroId)) }
     }
 
+    override suspend fun getFavorite(id: String) {
+       kotlin.runCatching { api.getFavorite(FavoriteRequest(id)) }
+    }
+
 }
+

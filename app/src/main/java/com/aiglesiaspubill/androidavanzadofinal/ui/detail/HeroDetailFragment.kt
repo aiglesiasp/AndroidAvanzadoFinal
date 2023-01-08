@@ -45,8 +45,8 @@ class HeroDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observeDetailState()
         viewModel.getHeroDetail(args.hero.name)
+        observeDetailState()
     }
 
     //OBSERAR ESTADO DETALLE
@@ -61,6 +61,7 @@ class HeroDetailFragment : Fragment() {
                 is DetailState.Succes -> {
                     setHero(state.hero)
                     setHeroLocations(state.hero)
+                    setListeners(state.hero)
                 }
                 is DetailState.NetworkError -> println("NETWORK ERROR")
             }
@@ -83,6 +84,24 @@ class HeroDetailFragment : Fragment() {
         binding.locationsDateShow.text = "FECHA: ${hero.locations?.first()?.dateShow}"
         binding.locationsLatitud.text = "LATITUD: ${hero.locations?.first()?.latitud}"
         binding.locationsLongitud.text = "LONGITUD: ${hero.locations?.first()?.longitud}"
+    }
+
+    //PINTAR EL ICONO
+    private fun setHeroFavorite(hero: Hero) {
+        when(hero.favorite) {
+            true -> binding.buttonFavorite.setImageResource(R.drawable.ic_favorite)
+            false -> binding.buttonFavorite.setImageResource(R.drawable.ic_not_favorite)
+        }
+    }
+
+    //FUNCION DE LISTENERS
+    private fun setListeners(hero: Hero) {
+        with(binding) {
+            buttonFavorite.setOnClickListener {
+                viewModel.getFavorite()
+            }
+        }
+        setHeroFavorite(hero)
     }
 
     override fun onDestroyView() {

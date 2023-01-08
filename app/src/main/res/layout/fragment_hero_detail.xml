@@ -40,7 +40,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:backgroundTint="@color/white"
-                android:src="@drawable/ic_favorite"
+                android:src="@drawable/ic_not_favorite"
                 android:contentDescription="Boton de heroe favorito"
                 />
 

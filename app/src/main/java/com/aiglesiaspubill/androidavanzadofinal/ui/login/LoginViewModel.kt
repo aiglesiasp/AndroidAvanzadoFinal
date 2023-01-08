@@ -1,6 +1,7 @@
 package com.aiglesiaspubill.androidavanzadofinal.ui.login
 
 import android.content.SharedPreferences
+import androidx.core.util.PatternsCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,6 +13,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.Credentials
 import java.nio.charset.StandardCharsets
+import java.util.regex.Pattern
 import javax.inject.Inject
 
 @HiltViewModel
@@ -32,9 +34,46 @@ class LoginViewModel @Inject constructor(private val repository: Repository, pri
         return Credentials.basic(user, pass, StandardCharsets.UTF_8)
     }
 
+    //CHEKEAR USUARIO
+    private fun checkUser(user: String): Boolean {
+        if (user.isEmpty() || user.isBlank()) return false
+        if(!PatternsCompat.EMAIL_ADDRESS.matcher(user).matches()) return false
+        return true
+    }
+
+    //CHEKEAR PASSWORD
+    private fun checkPassword(password: String): Boolean {
+        val passwordRegex = Pattern.compile(
+            "^" +
+                    "(?=.*[0-9])" +   //por lo menos 1 digito
+                    "(?=.*[a-z])" +     //1 letra minuscula
+                    "(?=.*[A-Z])" +     //1 letra mayuscula
+                    "(?=\\S+$)" +     //no espacios en blanco
+                    ".{4,}" +     //por lo menos 4 caracteres
+                    "$"
+        )
+        if (password.isEmpty() || password.isBlank()) return false
+        if(!passwordRegex.matcher(password).matches()) return false
+        return true
+    }
+
+
+
     //HACER EL LOGIN
     fun login(user: String, pass: String) {
         setValueOnMainThread(LoginState.loading)
+
+        //COMPROBAR LOGIN y USUARIO
+        val checkUser = checkUser(user)
+        val checkPass = checkPassword(pass)
+        if (!checkUser) {
+            setValueOnMainThread(LoginState.Failure("Error en Usuario"))
+            return
+        }
+        if(!checkPass){
+            setValueOnMainThread(LoginState.Failure("Error en Contrasenya"))
+            return
+        }
 
         //COMPRUEBO SI ESTA EN SHAREDPREFERENCES
         if(sharedPreferences.getString("TOKEN", null) == null) {
