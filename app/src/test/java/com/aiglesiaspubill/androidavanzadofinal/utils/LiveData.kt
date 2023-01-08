@@ -1,4 +1,4 @@
-package com.aiglesiaspubill.androidavanzadofinal.data.utils
+package com.aiglesiaspubill.androidavanzadofinal.utils
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer

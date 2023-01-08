@@ -5,9 +5,9 @@ import android.content.SharedPreferences
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.core.app.ApplicationProvider
 import com.aiglesiaspubill.androidavanzadofinal.data.Repository
-import com.aiglesiaspubill.androidavanzadofinal.data.utils.generateHeros
-import com.aiglesiaspubill.androidavanzadofinal.data.utils.generateToken
-import com.aiglesiaspubill.androidavanzadofinal.data.utils.getOrAwaitValue
+import com.aiglesiaspubill.androidavanzadofinal.utils.generateHeros
+import com.aiglesiaspubill.androidavanzadofinal.utils.generateToken
+import com.aiglesiaspubill.androidavanzadofinal.utils.getOrAwaitValue
 import com.aiglesiaspubill.androidavanzadofinal.ui.herolist.HeroListState
 import com.aiglesiaspubill.androidavanzadofinal.ui.herolist.HeroesListViewModel
 import com.google.common.truth.Truth

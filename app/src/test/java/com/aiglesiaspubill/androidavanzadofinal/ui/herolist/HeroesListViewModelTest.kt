@@ -3,8 +3,8 @@ package com.aiglesiaspubill.androidavanzadofinal.ui.herolist
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.aiglesiaspubill.androidavanzadofinal.data.Repository
 import com.aiglesiaspubill.androidavanzadofinal.data.RepositoryImpl
-import com.aiglesiaspubill.androidavanzadofinal.data.utils.generateHeros
-import com.aiglesiaspubill.androidavanzadofinal.data.utils.getOrAwaitValue
+import com.aiglesiaspubill.androidavanzadofinal.utils.generateHeros
+import com.aiglesiaspubill.androidavanzadofinal.utils.getOrAwaitValue
 import com.google.common.truth.Truth
 import io.mockk.coEvery
 import io.mockk.mockk

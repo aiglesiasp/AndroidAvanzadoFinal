@@ -1,12 +1,13 @@
-package com.aiglesiaspubill.androidavanzadofinal.data.fakes
+package com.aiglesiaspubill.androidavanzadofinal.fakes
 
 import com.aiglesiaspubill.androidavanzadofinal.data.remote.DragonBallAPI
 import com.aiglesiaspubill.androidavanzadofinal.data.remote.RemoteDataSource
 import com.aiglesiaspubill.androidavanzadofinal.data.remote.response.HeroRemote
 import com.aiglesiaspubill.androidavanzadofinal.data.remote.response.LocationRemote
-import com.aiglesiaspubill.androidavanzadofinal.data.utils.*
 import com.aiglesiaspubill.androidavanzadofinal.domain.Hero
-import kotlin.reflect.jvm.internal.impl.load.java.JavaClassesTracker.Default
+import com.aiglesiaspubill.androidavanzadofinal.utils.generateHeroRemote
+import com.aiglesiaspubill.androidavanzadofinal.utils.generateHerosRemote
+import com.aiglesiaspubill.androidavanzadofinal.utils.generateRemoteLocations
 
 class FakeRemoteDataSource(val hero: Hero): RemoteDataSource {
     override suspend fun getHeros(): Result<List<HeroRemote>> {

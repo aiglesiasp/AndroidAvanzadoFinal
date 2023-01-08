@@ -5,6 +5,8 @@ import com.aiglesiaspubill.androidavanzadofinal.data.Repository
 import com.aiglesiaspubill.androidavanzadofinal.data.utils.*
 import com.aiglesiaspubill.androidavanzadofinal.ui.herolist.HeroListState
 import com.aiglesiaspubill.androidavanzadofinal.ui.herolist.HeroesListViewModel
+import com.aiglesiaspubill.androidavanzadofinal.utils.generateHero
+import com.aiglesiaspubill.androidavanzadofinal.utils.getOrAwaitValue
 import com.google.common.truth.Truth
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -51,7 +53,8 @@ class DetailViewModelTest {
         sut = DetailViewModel(repository)
         val hero = generateHero()
 
-        coEvery { repository.getHeroDetail(hero.first().name) } returns DetailState.Succes(generateHero().first())
+        coEvery { repository.getHeroDetail(hero.first().name) } returns DetailState.Succes(
+            generateHero().first())
 
         //WHEN
         val actual = sut.getHeroDetail(hero.first().name)

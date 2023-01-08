@@ -3,15 +3,15 @@ package com.aiglesiaspubill.androidavanzadofinal.data
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.test.core.app.ApplicationProvider
-import com.aiglesiaspubill.androidavanzadofinal.data.fakes.FakeLocalDataSource
-import com.aiglesiaspubill.androidavanzadofinal.data.fakes.FakeRemoteDataSource
+import com.aiglesiaspubill.androidavanzadofinal.fakes.FakeLocalDataSource
+import com.aiglesiaspubill.androidavanzadofinal.fakes.FakeRemoteDataSource
 import com.aiglesiaspubill.androidavanzadofinal.data.local.LocalDataSource
 import com.aiglesiaspubill.androidavanzadofinal.data.mappers.Mappers
 import com.aiglesiaspubill.androidavanzadofinal.data.remote.RemoteDataSource
 import com.aiglesiaspubill.androidavanzadofinal.data.remote.request.LocationRequest
-import com.aiglesiaspubill.androidavanzadofinal.data.utils.generateHero
-import com.aiglesiaspubill.androidavanzadofinal.data.utils.generateHerosLocal
-import com.aiglesiaspubill.androidavanzadofinal.data.utils.generateRemoteLocations
+import com.aiglesiaspubill.androidavanzadofinal.utils.generateHero
+import com.aiglesiaspubill.androidavanzadofinal.utils.generateHerosLocal
+import com.aiglesiaspubill.androidavanzadofinal.utils.generateRemoteLocations
 import com.aiglesiaspubill.androidavanzadofinal.ui.herolist.HeroListState
 import com.google.common.truth.Truth
 import io.mockk.*
@@ -73,7 +73,9 @@ class RepositoryImplTest {
         val actual = repositoryImpl.getHeroesWithCache()
 
         //THEN
-        Truth.assertThat(actual).isEqualTo(HeroListState.Succes(Mappers().mapLocalToPresentation(generateHerosLocal())))
+        Truth.assertThat(actual).isEqualTo(HeroListState.Succes(Mappers().mapLocalToPresentation(
+            generateHerosLocal()
+        )))
     }
 
 }

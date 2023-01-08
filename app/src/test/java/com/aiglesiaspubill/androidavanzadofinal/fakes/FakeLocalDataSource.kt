@@ -1,8 +1,8 @@
-package com.aiglesiaspubill.androidavanzadofinal.data.fakes
+package com.aiglesiaspubill.androidavanzadofinal.fakes
 
 import com.aiglesiaspubill.androidavanzadofinal.data.local.LocalDataSource
 import com.aiglesiaspubill.androidavanzadofinal.data.local.model.HeroLocal
-import com.aiglesiaspubill.androidavanzadofinal.data.utils.generateHerosLocal
+import com.aiglesiaspubill.androidavanzadofinal.utils.generateHerosLocal
 
 class FakeLocalDataSource: LocalDataSource {
 

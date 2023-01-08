@@ -1,4 +1,4 @@
-package com.aiglesiaspubill.androidavanzadofinal.data.utils
+package com.aiglesiaspubill.androidavanzadofinal.utils
 
 import com.aiglesiaspubill.androidavanzadofinal.data.local.model.HeroLocal
 import com.aiglesiaspubill.androidavanzadofinal.data.remote.response.HeroRemote
