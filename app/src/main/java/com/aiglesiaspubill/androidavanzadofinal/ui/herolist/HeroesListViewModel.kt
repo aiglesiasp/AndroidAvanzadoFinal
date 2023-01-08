@@ -37,6 +37,4 @@ class HeroesListViewModel @Inject constructor(
             setValueOnMainThread(heroesListState)
         }
     }
-
-
 }
