@@ -85,7 +85,7 @@ class RepositoryImpl @Inject constructor(private val localDataSource: LocalDataS
         val locations = remoteDataSource.getLocations(heroId)
         locations.onSuccess {
             //Devolver un mapper con las localizaciones
-            return mappers.mapRemoteLocationsToLocations(it)
+            return mappers.mapRemoteLocationsToLocations(locations.getOrThrow())
         }
         return emptyList()
     }

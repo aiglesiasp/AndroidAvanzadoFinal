@@ -4,6 +4,8 @@ import android.util.Log
 import androidx.lifecycle.*
 import com.aiglesiaspubill.androidavanzadofinal.ui.herolist.HeroListState
 import com.aiglesiaspubill.androidavanzadofinal.data.Repository
+import com.aiglesiaspubill.androidavanzadofinal.data.remote.response.LocationRemote
+import com.aiglesiaspubill.androidavanzadofinal.domain.Location
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -41,13 +43,13 @@ class DetailViewModel @Inject constructor(
                 is DetailState.Failure -> Log.d("LOCATIONS","Error al buscar localizaciones")
                 is DetailState.NetworkError -> Log.d("LOCATIONS","Error Network")
                 is DetailState.Succes -> {
-                    val hero = stateDetail.hero
                     val locations = withContext(Dispatchers.IO) {
-                        //LLAMAR A LAS LOCALIZACIONES EN EL REPOSITORIO
-                        repository.getLocations(hero.id)
+                        repository.getLocations(stateDetail.hero.id)
+
                     }
-                    hero.locations = locations
+                    stateDetail.hero.locations = locations
                 }
+
             }
             setValueOnMainThread(stateDetail)
         }

@@ -59,7 +59,8 @@ class HeroDetailFragment : Fragment() {
                     Toast.LENGTH_LONG
                 ).show()
                 is DetailState.Succes -> {
-                   setHero(state.hero)
+                    setHero(state.hero)
+                    setHeroLocations(state.hero)
                 }
                 is DetailState.NetworkError -> println("NETWORK ERROR")
             }
@@ -71,7 +72,17 @@ class HeroDetailFragment : Fragment() {
         binding.nameHeroDetail.text = hero.name
         binding.descriptionHeroDetail.text = hero.description
         binding.imageHeroDetail.load(hero.photo)
-        //binding.textViewLocations.text = hero.locations?.first().toString()
+    }
+
+    //PINTAR LOCALIZACIONES HEROE
+    private fun setHeroLocations(hero: Hero) {
+        val pos = 0
+        for (i in 0..(hero.locations?.size ?: 0)) {
+
+        }
+        binding.locationsDateShow.text = "FECHA: ${hero.locations?.first()?.dateShow}"
+        binding.locationsLatitud.text = "LATITUD: ${hero.locations?.first()?.latitud}"
+        binding.locationsLongitud.text = "LONGITUD: ${hero.locations?.first()?.longitud}"
     }
 
     override fun onDestroyView() {
