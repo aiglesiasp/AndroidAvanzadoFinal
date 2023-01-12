@@ -8,6 +8,7 @@ import com.aiglesiaspubill.androidavanzadofinal.ui.login.LoginState
 import com.aiglesiaspubill.androidavanzadofinal.utils.generateHero
 import com.aiglesiaspubill.androidavanzadofinal.utils.generateHeros
 import com.aiglesiaspubill.androidavanzadofinal.utils.generateLocations
+import com.aiglesiaspubill.androidavanzadofinal.utils.generateToken
 
 class FakeRepository: Repository {
     override suspend fun getHeroes(): HeroListState {
@@ -19,7 +20,7 @@ class FakeRepository: Repository {
     }
 
     override suspend fun getToken(): LoginState {
-        return LoginState.Succes("123456")
+        return LoginState.Succes(generateToken())
     }
 
     override suspend fun getHeroDetail(name: String): DetailState {

@@ -27,10 +27,12 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.Mockito.mock
 import org.robolectric.RobolectricTestRunner
 
 @RunWith(RobolectricTestRunner::class)
 @OptIn(ExperimentalCoroutinesApi::class)
+
 class LoginViewModelTest {
     //REGLAS
     @get:Rule
@@ -49,8 +51,9 @@ class LoginViewModelTest {
     @Before
     fun setUp() {
         Dispatchers.setMain(mainThreadSurrogate)
-        repository = FakeRepository()
-        sharedPreferences = mockk()
+        repository = mockk()
+        sharedPreferences = ApplicationProvider.getApplicationContext<Context>()
+            .getSharedPreferences(Shared.getSharedPreferencesName(), Context.MODE_PRIVATE)
         sut = LoginViewModel(repository, sharedPreferences)
     }
 
@@ -73,9 +76,9 @@ class LoginViewModelTest {
         val actualLiveData = sut.stateLogin.getOrAwaitValue()
 
         //THEN
-        //assert(actualLiveData is LoginState.Succes)
-        //Truth.assertThat(actualLiveData).isEqualTo(LoginState.Succes(generateToken()))
-        Truth.assertThat((actualLiveData as LoginState.Succes).token).isEqualTo("123456")
+        Truth.assertThat((actualLiveData as LoginState.Succes).token).isEqualTo(generateToken())
+        //Truth.assertThat((actual as LoginState.Succes).token).isEqualTo("123456")
+        //Truth.assertThat((actualLiveData as LoginState.Succes).token).isEqualTo("123456")
     }
 
 }

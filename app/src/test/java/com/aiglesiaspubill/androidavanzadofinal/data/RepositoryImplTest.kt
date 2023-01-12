@@ -7,6 +7,7 @@ import com.aiglesiaspubill.androidavanzadofinal.fakes.FakeRemoteDataSource
 import com.aiglesiaspubill.androidavanzadofinal.data.local.LocalDataSource
 import com.aiglesiaspubill.androidavanzadofinal.data.mappers.Mappers
 import com.aiglesiaspubill.androidavanzadofinal.data.remote.RemoteDataSource
+import com.aiglesiaspubill.androidavanzadofinal.domain.Location
 import com.aiglesiaspubill.androidavanzadofinal.fakes.FakeLocalDataSource
 import com.aiglesiaspubill.androidavanzadofinal.ui.detail.DetailState
 import com.aiglesiaspubill.androidavanzadofinal.ui.herolist.HeroListState
@@ -49,7 +50,6 @@ class RepositoryImplTest {
     }
 
     //------------------------------------------------------------------------------------//
-    //TESTING PARA FUNCION GETLOCATIONS
     @Test
     fun `WHEN getLocations EXPECT SUCCESS not empty list` () = runTest {
         //GIVEN --> lo que necesito
@@ -62,10 +62,20 @@ class RepositoryImplTest {
         Truth.assertThat(actual).containsExactlyElementsIn(generateLocations())
     }
 
+    //------------------------------------------------------------------------------------//
+    @Test
+    fun `WHEN getLocations EXPECT SUCCESS return emptyList`() = runTest {
+        //GIVEN
+        //WHEN
+        val actual = sut.getLocations("SUCCESS_BUT_NULL")
+        //THEN
+        Truth.assertThat(actual).isEmpty()
+    }
+
 
     //------------------------------------------------------------------------------------//
     @Test
-    fun `WHEN getHerosWithCache THEN SUCCESS return HeroListState from local and remote called`() = runTest {
+    fun `WHEN getHerosWithCache EXPECT SUCCESS return HeroListState from local and remote called`() = runTest {
         //GIVEN
         //WHEN
         val actual = sut.getHeroesWithCache()
@@ -76,7 +86,7 @@ class RepositoryImplTest {
 
     //------------------------------------------------------------------------------------//
     @Test
-    fun `WHEN getHerosDetail THEN SUCCESS return DetailState`() = runTest {
+    fun `WHEN getHerosDetail EXPECT SUCCESS return DetailState`() = runTest {
         //GIVEN
         //WHEN
         val actual = sut.getHeroDetail("SUCCESS")
@@ -87,7 +97,7 @@ class RepositoryImplTest {
 
     //------------------------------------------------------------------------------------//
     @Test
-    fun `WHEN getHerosDetail THEN FAILURE return NULL`() = runTest {
+    fun `WHEN getHerosDetail EXPECT FAILURE return NULL`() = runTest {
         //GIVEN
         //WHEN
         val actual = sut.getHeroDetail("NULL")
@@ -98,7 +108,7 @@ class RepositoryImplTest {
 
     //------------------------------------------------------------------------------------//
     @Test
-    fun `WHEN getHerosDetail THEN FAILURE return NETWORK ERROR`() = runTest {
+    fun `WHEN getHerosDetail EXPECT FAILURE return NETWORK ERROR`() = runTest {
         //GIVEN
         //WHEN
         val actual = sut.getHeroDetail("NETWORK_ERROR")
@@ -109,7 +119,7 @@ class RepositoryImplTest {
 
     //------------------------------------------------------------------------------------//
     @Test
-    fun `WHEN getHerosDetail THEN SUCCES return NULL`() = runTest {
+    fun `WHEN getHerosDetail EXPECT SUCCES return NULL`() = runTest {
         //GIVEN
         //WHEN
         val actual = sut.getHeroDetail("SUCCESS_BUT_NULL")
@@ -120,7 +130,7 @@ class RepositoryImplTest {
 
     //------------------------------------------------------------------------------------//
     @Test
-    fun `WHEN getToken THEN SUCCESS return LoginState`() = runTest {
+    fun `WHEN getToken EXPECT SUCCESS return LoginState`() = runTest {
         //GIVEN
         //WHEN
         val token = sut.getToken()

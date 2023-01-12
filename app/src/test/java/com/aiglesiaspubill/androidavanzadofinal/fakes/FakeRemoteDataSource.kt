@@ -44,8 +44,9 @@ class FakeRemoteDataSource(): RemoteDataSource {
     override suspend fun getLocations(heroId: String): Result<List<LocationRemote>> {
         return when (heroId) {
             "SUCCESS" -> Result.success(generateRemoteLocations())
-            "NETWORK_ERROR" -> Result.failure(HttpException(Response.success(404, {})))
-            "NULL" -> Result.failure(java.lang.NullPointerException())
+            "NETWORK_ERROR" -> Result.failure(HttpException(Response.success(204, {})))
+            "NULL" -> Result.failure(java.lang.NullPointerException("Null pointer exception"))
+            "SUCCESS_BUT_NULL" -> Result.success(emptyList())
             else -> { Result.failure(java.lang.Exception())}
         }
     }
