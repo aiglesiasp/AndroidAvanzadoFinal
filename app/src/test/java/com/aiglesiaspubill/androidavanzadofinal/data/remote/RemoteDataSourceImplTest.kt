@@ -2,37 +2,73 @@ package com.aiglesiaspubill.androidavanzadofinal.data.remote
 
 import com.aiglesiaspubill.androidavanzadofinal.base.BaseNetworkTest
 import com.aiglesiaspubill.androidavanzadofinal.ui.detail.DetailState
+import com.aiglesiaspubill.androidavanzadofinal.ui.herolist.HeroListState
 import com.aiglesiaspubill.androidavanzadofinal.utils.generateHero
+import com.aiglesiaspubill.androidavanzadofinal.utils.generateHeros
+import com.aiglesiaspubill.androidavanzadofinal.utils.generateHerosRemote
+import com.aiglesiaspubill.androidavanzadofinal.utils.getOrAwaitValue
 import com.google.common.truth.Truth
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
-import javax.xml.transform.sax.TransformerHandler
+import org.mockito.ArgumentMatchers.anyString
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class RemoteDataSourceImplTest : BaseNetworkTest() {
 
-    private lateinit var remoteDataSourceImpl: RemoteDataSource
-
+    private lateinit var sut: RemoteDataSource
+    //------------------------------------------------------------------------------------//
     @Before
     fun setUp() {
-       remoteDataSourceImpl = RemoteDataSourceImpl(api)
+       sut = RemoteDataSourceImpl(api)
     }
 
+    //------------------------------------------------------------------------------------//
     @Test
-    fun `WHEN getHeroesDetail EXPECT success and DetailState`() = runTest {
+    fun `WHEN getHeroes EXPECT success list of HerosRemote`() = runTest {
         //GIVEN
-        val hero = generateHero()
-
         //WHEN
-        val actual = remoteDataSourceImpl.getHeroDetail(hero.first().name)
-
+        val actual = sut.getHeros()
         //THEN
         Truth.assertThat(actual).isNotNull()
-        Truth.assertThat(actual).isEqualTo(DetailState.Succes(generateHero().first()))
+        Truth.assertThat(actual.getOrNull()?.get(0)?.name).isEqualTo("Maestro Roshi")
 
+    }
+
+    //------------------------------------------------------------------------------------//
+    @Test
+    fun `WHEN getHeroesDetail EXPECT success HeroRemote`() = runTest {
+        //GIVEN
+        //WHEN
+        val actual = sut.getHeroDetail(anyString())
+        //THEN
+        Truth.assertThat(actual).isNotNull()
+        Truth.assertThat(actual.getOrNull()?.name).isEqualTo("Maestro Roshi")
+
+    }
+
+    //------------------------------------------------------------------------------------//
+    @Test
+    fun `WHEN getToken EXPECT success String`() = runTest {
+        //GIVEN
+        //WHEN
+        val actual = sut.getToken()
+        //THEN
+        Truth.assertThat(actual).isNotNull()
+        Truth.assertThat(actual.getOrNull().toString()).isEqualTo("123456")
+    }
+
+    //------------------------------------------------------------------------------------//
+    @Test
+    fun `WHEN getLocation EXPECT success Location`() = runTest {
+        //GIVEN
+        //WHEN
+        val actual = sut.getLocations("D13A40E5-4418-4223-9CE6-D2F9A28EBE94")
+        //THEN
+        Truth.assertThat(actual).isNotNull()
+        Truth.assertThat(actual.getOrNull()?.get(0)?.latitud).isEqualTo("35.71867899343361")
     }
 
 }

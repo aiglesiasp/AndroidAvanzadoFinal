@@ -33,19 +33,21 @@ class HeroesListViewModelTest {
 
     private val mainThreadSurrogate = newSingleThreadContext("UI Thread")
 
+    //------------------------------------------------------------------------------------//
     @Before
     fun setUp() {
         Dispatchers.setMain(mainThreadSurrogate)
         repository = mockk()
     }
 
+    //------------------------------------------------------------------------------------//
     @After
     fun tearDown() {
         Dispatchers.resetMain()
         mainThreadSurrogate.close()
     }
 
-
+    //------------------------------------------------------------------------------------//
     @Test
     fun `WHEN getHeroes EXPECTS success returns HeroListState`() = runTest {
         //GIVEN

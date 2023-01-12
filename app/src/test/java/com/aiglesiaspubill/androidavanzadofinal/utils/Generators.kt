@@ -8,7 +8,7 @@ import com.aiglesiaspubill.androidavanzadofinal.domain.Location
 
 
 fun generateToken(): String {
-    return ""
+    return "123456"
 }
 
 fun generateHerosRemote(): List<HeroRemote> {
@@ -44,7 +44,8 @@ fun generateHerosLocal(): List<HeroLocal> {
                 "Aún en los primeros episodios había un toque de tradición y disciplina, muy bien representada por el maestro." +
                 "Pero Muten Roshi es un anciano extremadamente pervertido con las chicas jóvenes, una actitud que se utilizaba en escenas divertidas en los años 80." +
                 "En su faceta de experto en artes marciales, fue quien le enseñó a Goku técnicas como el Kame Hame Ha",
-        false) }
+        false
+    ) }
 }
 
 fun generateHeros(): List<Hero> {
@@ -56,7 +57,8 @@ fun generateHeros(): List<Hero> {
                 "Aún en los primeros episodios había un toque de tradición y disciplina, muy bien representada por el maestro." +
                 "Pero Muten Roshi es un anciano extremadamente pervertido con las chicas jóvenes, una actitud que se utilizaba en escenas divertidas en los años 80." +
                 "En su faceta de experto en artes marciales, fue quien le enseñó a Goku técnicas como el Kame Hame Ha",
-        false) }
+        false,
+        generateLocations()) }
 }
 
 fun generateHero(): List<Hero> {
@@ -68,7 +70,8 @@ fun generateHero(): List<Hero> {
                 "Aún en los primeros episodios había un toque de tradición y disciplina, muy bien representada por el maestro." +
                 "Pero Muten Roshi es un anciano extremadamente pervertido con las chicas jóvenes, una actitud que se utilizaba en escenas divertidas en los años 80." +
                 "En su faceta de experto en artes marciales, fue quien le enseñó a Goku técnicas como el Kame Hame Ha",
-        false) }
+        false,
+        generateLocations()) }
 }
 
 fun generateLocations(): List<Location> {

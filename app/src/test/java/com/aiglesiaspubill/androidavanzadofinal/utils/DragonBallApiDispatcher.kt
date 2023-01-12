@@ -12,21 +12,15 @@ class DragonBallApiDispatcher: Dispatcher() {
 
         return when (request.path) {
             "/api/heros/all" -> {
-                if (request.body.toString().contains("\"\"")) {
-                    return MockResponse()
-                        .setResponseCode(HttpURLConnection.HTTP_OK)
-                        .setBody(getJson("json/heros.json"))
-                } else {
-                    return MockResponse()
-                        .setResponseCode(HttpURLConnection.HTTP_OK)
-                        .setBody(getJson("json/hero.json"))
-                }
+                return MockResponse()
+                    .setResponseCode(HttpURLConnection.HTTP_OK)
+                    .setBody(getJson("json/heros.json"))
             }
             "/api/auth/login" -> {
                 return MockResponse()
                     .setResponseCode(HttpURLConnection.HTTP_OK)
                     .setHeader("Content-type", "text/plain")
-                    .setBody("TOKEN")
+                    .setBody("123456")
             }
             "/api/heros/locations" -> {
                 return MockResponse()

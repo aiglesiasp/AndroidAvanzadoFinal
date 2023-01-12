@@ -2,10 +2,9 @@ package com.aiglesiaspubill.androidavanzadofinal.ui.detail
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.aiglesiaspubill.androidavanzadofinal.data.Repository
-import com.aiglesiaspubill.androidavanzadofinal.data.utils.*
-import com.aiglesiaspubill.androidavanzadofinal.ui.herolist.HeroListState
-import com.aiglesiaspubill.androidavanzadofinal.ui.herolist.HeroesListViewModel
+import com.aiglesiaspubill.androidavanzadofinal.data.remote.response.LocationRemote
 import com.aiglesiaspubill.androidavanzadofinal.utils.generateHero
+import com.aiglesiaspubill.androidavanzadofinal.utils.generateLocations
 import com.aiglesiaspubill.androidavanzadofinal.utils.getOrAwaitValue
 import com.google.common.truth.Truth
 import io.mockk.coEvery
@@ -34,12 +33,14 @@ class DetailViewModelTest {
 
     private val mainThreadSurrogate = newSingleThreadContext("UI Thread")
 
+    //------------------------------------------------------------------------------------//
     @Before
     fun setUp() {
         Dispatchers.setMain(mainThreadSurrogate)
         repository = mockk()
     }
 
+    //------------------------------------------------------------------------------------//
     @After
     fun tearDown() {
         Dispatchers.resetMain()
@@ -47,14 +48,15 @@ class DetailViewModelTest {
     }
 
 
+    //------------------------------------------------------------------------------------//
     @Test
     fun `WHEN getHeroDetail EXPECTS success returns DetailListState`() = runTest {
         //GIVEN
         sut = DetailViewModel(repository)
         val hero = generateHero()
 
-        coEvery { repository.getHeroDetail(hero.first().name) } returns DetailState.Succes(
-            generateHero().first())
+        coEvery { repository.getHeroDetail(hero.first().name) } returns DetailState.Succes(generateHero().first())
+        coEvery { repository.getLocations(hero.first().id) } returns generateLocations()
 
         //WHEN
         val actual = sut.getHeroDetail(hero.first().name)

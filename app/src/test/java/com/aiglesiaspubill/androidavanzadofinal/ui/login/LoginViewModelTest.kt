@@ -5,15 +5,18 @@ import android.content.SharedPreferences
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.core.app.ApplicationProvider
 import com.aiglesiaspubill.androidavanzadofinal.data.Repository
+import com.aiglesiaspubill.androidavanzadofinal.fakes.FakeRepository
 import com.aiglesiaspubill.androidavanzadofinal.utils.generateHeros
 import com.aiglesiaspubill.androidavanzadofinal.utils.generateToken
 import com.aiglesiaspubill.androidavanzadofinal.utils.getOrAwaitValue
 import com.aiglesiaspubill.androidavanzadofinal.ui.herolist.HeroListState
 import com.aiglesiaspubill.androidavanzadofinal.ui.herolist.HeroesListViewModel
+import com.aiglesiaspubill.androidavanzadofinal.utils.Shared
 import com.google.common.truth.Truth
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
@@ -23,7 +26,11 @@ import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
 
+@RunWith(RobolectricTestRunner::class)
+@OptIn(ExperimentalCoroutinesApi::class)
 class LoginViewModelTest {
     //REGLAS
     @get:Rule
@@ -38,36 +45,37 @@ class LoginViewModelTest {
 
     private val mainThreadSurrogate = newSingleThreadContext("UI Thread")
 
+    //------------------------------------------------------------------------------------//
     @Before
     fun setUp() {
         Dispatchers.setMain(mainThreadSurrogate)
-        repository = mockk()
-        sharedPreferences = ApplicationProvider.getApplicationContext<Context>()
-            .getSharedPreferences("SHARED PREFERENCES", Context.MODE_PRIVATE)
+        repository = FakeRepository()
+        sharedPreferences = mockk()
+        sut = LoginViewModel(repository, sharedPreferences)
     }
 
+    //------------------------------------------------------------------------------------//
     @After
     fun tearDown() {
         Dispatchers.resetMain()
         mainThreadSurrogate.close()
     }
 
-
+    //------------------------------------------------------------------------------------//
     @Test
     fun `WHEN getLogin EXPECTS success returns TOKEN`() = runTest {
         //GIVEN
-        sut = LoginViewModel(repository, sharedPreferences)
-        val user = "Aitor"
-        val pass = "123456"
-
-        coEvery { repository.getToken() } returns LoginState.Succes(generateToken())
+        val user = "aiglesiaspubill@gmail.com"
+        val pass = "19871989aA"
 
         //WHEN
         val actual = sut.login(user, pass)
         val actualLiveData = sut.stateLogin.getOrAwaitValue()
 
         //THEN
-        Truth.assertThat(actualLiveData).isEqualTo(LoginState.Succes(generateToken()))
+        //assert(actualLiveData is LoginState.Succes)
+        //Truth.assertThat(actualLiveData).isEqualTo(LoginState.Succes(generateToken()))
+        Truth.assertThat((actualLiveData as LoginState.Succes).token).isEqualTo("123456")
     }
 
 }
