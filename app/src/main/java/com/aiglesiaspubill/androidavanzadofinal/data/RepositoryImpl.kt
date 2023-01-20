@@ -8,6 +8,8 @@ import com.aiglesiaspubill.androidavanzadofinal.domain.Location
 import com.aiglesiaspubill.androidavanzadofinal.ui.detail.DetailState
 import com.aiglesiaspubill.androidavanzadofinal.ui.herolist.HeroListState
 import com.aiglesiaspubill.androidavanzadofinal.ui.login.LoginState
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import javax.inject.Inject
 
@@ -22,7 +24,20 @@ class RepositoryImpl @Inject constructor(
         val TOKEN = "TOKEN"
     }
 
-    //FUNCION PARA PASAR DE UN RESULTADO A OTRO
+    override suspend fun getToken(): LoginState {
+        val token = remoteDataSource.getToken()
+        return when {
+            token.isSuccess -> {
+                sharedPreferences.edit().putString(TOKEN, token.getOrThrow()).apply()
+                return LoginState.Succes(token.getOrThrow())
+            }
+            token.isFailure -> LoginState.Failure("Error al intentar conseguir el token")
+            else -> {
+                LoginState.NetworkError(0)
+            }
+        }
+    }
+
     override suspend fun getHeroes(): HeroListState {
         val remoteResult = remoteDataSource.getHeros()
         remoteResult.onSuccess {
@@ -31,7 +46,6 @@ class RepositoryImpl @Inject constructor(
         return HeroListState.Failure("Error al obtener heroes")
     }
 
-    //OBTENER HEROES CON EXCEPCIONES
     override suspend fun getHeroesWithCache(): HeroListState {
         var localResult = localDataSource.getHeroes()
         val remoteResult = getHeroes()
@@ -48,22 +62,6 @@ class RepositoryImpl @Inject constructor(
         return remoteResult
     }
 
-    //OBTENER EL TOKEN
-    override suspend fun getToken(): LoginState {
-        val token = remoteDataSource.getToken()
-        return when {
-            token.isSuccess -> {
-                sharedPreferences.edit().putString(TOKEN, token.getOrThrow()).apply()
-                return LoginState.Succes(token.getOrThrow())
-            }
-            token.isFailure -> LoginState.Failure("Error al intentar conseguir el token")
-            else -> {
-                LoginState.NetworkError(0)
-            }
-        }
-    }
-
-    //OBTENER EL DETALLE DEL HEROE
     override suspend fun getHeroDetail(name: String): DetailState {
         val result = remoteDataSource.getHeroDetail(name)
         return when {
@@ -83,20 +81,31 @@ class RepositoryImpl @Inject constructor(
         }
     }
 
-    //OBTENER LOCALIZACIONES
     override suspend fun getLocations(heroId: String): List<Location> {
         val locations = remoteDataSource.getLocations(heroId)
         locations.onSuccess {
-            //Devolver un mapper con las localizaciones
             return mappers.mapRemoteLocationsToLocations(locations.getOrThrow())
         }
         return emptyList()
     }
 
-    //OBTENER EL FAVORITO
     override suspend fun changeFavorite(id: String) {
         remoteDataSource.changeFavorite(id)
+        val heroLocal = withContext(Dispatchers.IO) {
+            localDataSource.getHeroes()
+        }
+        var position = 0
+        heroLocal.forEachIndexed { ind, hero ->
+            if (hero.id == id) {
+                position = ind
+            }
+        }
+
+        val newHeroList = heroLocal
+        val favorite = newHeroList[position].favorite
+        newHeroList[position].favorite = !favorite
+        withContext(Dispatchers.IO) {
+            localDataSource.insertAll(newHeroList)
+        }
     }
-
-
 }

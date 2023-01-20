@@ -1,6 +1,7 @@
 package com.aiglesiaspubill.androidavanzadofinal.data.local
 
 import com.aiglesiaspubill.androidavanzadofinal.data.local.model.HeroLocal
+import com.aiglesiaspubill.androidavanzadofinal.domain.Hero
 import javax.inject.Inject
 
 class LocalDataSourceImpl @Inject constructor(private val dao: HeroDAO) : LocalDataSource {
@@ -14,5 +15,4 @@ class LocalDataSourceImpl @Inject constructor(private val dao: HeroDAO) : LocalD
     override fun insertAll(remoteHero: List<HeroLocal>) {
         dao.insertAll(remoteHero)
     }
-
 }
