@@ -18,17 +18,14 @@ fun <T> LiveData<T>.getOrAwaitValue(
         override fun onChanged(o: T?) {
             data = o
             latch.countDown()
-            if(latch.count.toInt() == 0) this@getOrAwaitValue.removeObserver(this)
+            if (latch.count.toInt() == 0) this@getOrAwaitValue.removeObserver(this)
         }
     }
-
     this.observeForever(observer)
-
     // Don't wait indefinitely if the LiveData is not set.
     if (!latch.await(time, timeUnit)) {
         throw TimeoutException("LiveData value was never set.")
     }
-
     @Suppress("UNCHECKED_CAST")
     return data as T
 }

@@ -21,14 +21,9 @@ import dagger.hilt.android.AndroidEntryPoint
 class HeroDetailFragment : Fragment() {
 
     private var _binding: FragmentHeroDetailBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
-    //Argumentos que le paso por los layouts
     private val args: HeroDetailFragmentArgs by navArgs()
-    //ViewModel
     private val viewModel: DetailViewModel by viewModels()
 
     override fun onCreateView(
@@ -47,7 +42,6 @@ class HeroDetailFragment : Fragment() {
         observeDetailState()
     }
 
-    //OBSERAR ESTADO DETALLE
     private fun observeDetailState() {
         viewModel.stateDetail.observe(viewLifecycleOwner) { state ->
             when (state) {
@@ -82,7 +76,7 @@ class HeroDetailFragment : Fragment() {
 
     //PINTAR EL ICONO
     private fun setHeroFavorite(hero: Hero) {
-        when(hero.favorite) {
+        when (hero.favorite) {
             true -> binding.buttonFavorite.setImageResource(R.drawable.ic_favorite)
             false -> binding.buttonFavorite.setImageResource(R.drawable.ic_not_favorite)
         }

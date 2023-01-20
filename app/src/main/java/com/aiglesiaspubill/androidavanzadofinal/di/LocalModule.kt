@@ -22,7 +22,7 @@ object LocalModule {
 
     //NOS DA EL DAO
     @Provides
-    fun provideDao(database: HeroDatabase) : HeroDAO {
+    fun provideDao(database: HeroDatabase): HeroDAO {
         return database.getDAO()
     }
 }

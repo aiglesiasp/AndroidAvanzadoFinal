@@ -21,7 +21,7 @@ class RemoteDataSourceImpl @Inject constructor(private val api: DragonBallAPI) :
     }
 
     //OBTENER HEROES DETAIL
-    override suspend fun getHeroDetail(name: String): Result<HeroRemote?>{
+    override suspend fun getHeroDetail(name: String): Result<HeroRemote?> {
         return runCatching { api.getHerosDetail(HerosRequest(name)).firstOrNull() }
     }
 
@@ -30,7 +30,7 @@ class RemoteDataSourceImpl @Inject constructor(private val api: DragonBallAPI) :
     }
 
     override suspend fun changeFavorite(id: String) {
-       kotlin.runCatching { api.changeFavorite(FavoriteRequest(id)) }
+        kotlin.runCatching { api.changeFavorite(FavoriteRequest(id)) }
     }
 
 }

@@ -6,7 +6,7 @@ import okhttp3.mockwebserver.RecordedRequest
 import java.net.HttpURLConnection
 import java.util.concurrent.TimeUnit
 
-class DragonBallApiDispatcher: Dispatcher() {
+class DragonBallApiDispatcher : Dispatcher() {
 
     override fun dispatch(request: RecordedRequest): MockResponse {
 

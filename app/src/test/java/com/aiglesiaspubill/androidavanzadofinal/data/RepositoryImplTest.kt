@@ -7,13 +7,11 @@ import com.aiglesiaspubill.androidavanzadofinal.fakes.FakeRemoteDataSource
 import com.aiglesiaspubill.androidavanzadofinal.data.local.LocalDataSource
 import com.aiglesiaspubill.androidavanzadofinal.data.mappers.Mappers
 import com.aiglesiaspubill.androidavanzadofinal.data.remote.RemoteDataSource
-import com.aiglesiaspubill.androidavanzadofinal.domain.Location
 import com.aiglesiaspubill.androidavanzadofinal.fakes.FakeLocalDataSource
 import com.aiglesiaspubill.androidavanzadofinal.ui.detail.DetailState
 import com.aiglesiaspubill.androidavanzadofinal.ui.herolist.HeroListState
 import com.aiglesiaspubill.androidavanzadofinal.ui.login.LoginState
 import com.aiglesiaspubill.androidavanzadofinal.utils.Shared
-import com.aiglesiaspubill.androidavanzadofinal.utils.generateHero
 import com.aiglesiaspubill.androidavanzadofinal.utils.generateLocations
 import com.google.common.truth.Truth
 import io.mockk.*
@@ -21,12 +19,9 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.*
 import org.junit.Before
-
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import retrofit2.HttpException
-import retrofit2.Response
 
 @RunWith(RobolectricTestRunner::class)
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -38,6 +33,7 @@ class RepositoryImplTest {
     private lateinit var fakeLocalDataSource: LocalDataSource
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var mappers: Mappers
+
     //------------------------------------------------------------------------------------//
     @Before
     fun setUp() {
@@ -46,12 +42,13 @@ class RepositoryImplTest {
         sharedPreferences = ApplicationProvider.getApplicationContext<Context>()
             .getSharedPreferences(Shared.getSharedPreferencesName(), Context.MODE_PRIVATE)
         mappers = Mappers()
-        sut = RepositoryImpl(fakeLocalDataSource, fakeRemoteDataSource, Mappers(), sharedPreferences)
+        sut =
+            RepositoryImpl(fakeLocalDataSource, fakeRemoteDataSource, Mappers(), sharedPreferences)
     }
 
     //------------------------------------------------------------------------------------//
     @Test
-    fun `WHEN getLocations EXPECT SUCCESS not empty list` () = runTest {
+    fun `WHEN getLocations EXPECT SUCCESS not empty list`() = runTest {
         //GIVEN --> lo que necesito
         // WHEN
         val actual = sut.getLocations("SUCCESS")
@@ -75,14 +72,16 @@ class RepositoryImplTest {
 
     //------------------------------------------------------------------------------------//
     @Test
-    fun `WHEN getHerosWithCache EXPECT SUCCESS return HeroListState from local and remote called`() = runTest {
-        //GIVEN
-        //WHEN
-        val actual = sut.getHeroesWithCache()
-        //THEN
-        assert(actual is HeroListState.Succes)
-        Truth.assertThat((actual as HeroListState.Succes).heros.get(0).name).isEqualTo("Maestro Roshi")
-    }
+    fun `WHEN getHerosWithCache EXPECT SUCCESS return HeroListState from local and remote called`() =
+        runTest {
+            //GIVEN
+            //WHEN
+            val actual = sut.getHeroesWithCache()
+            //THEN
+            assert(actual is HeroListState.Succes)
+            Truth.assertThat((actual as HeroListState.Succes).heros.get(0).name)
+                .isEqualTo("Maestro Roshi")
+        }
 
     //------------------------------------------------------------------------------------//
     @Test

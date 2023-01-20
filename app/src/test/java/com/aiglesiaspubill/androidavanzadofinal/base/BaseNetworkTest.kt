@@ -24,7 +24,7 @@ open class BaseNetworkTest {
     private lateinit var loggingInterceptor: HttpLoggingInterceptor
 
     @Before
-    fun setup(){
+    fun setup() {
         mockWebServer = MockWebServer()
         mockWebServer.dispatcher = DragonBallApiDispatcher()
         mockWebServer.start()
@@ -42,7 +42,7 @@ open class BaseNetworkTest {
     }
 
     @After
-    fun tearDown(){
+    fun tearDown() {
         mockWebServer.shutdown()
     }
 

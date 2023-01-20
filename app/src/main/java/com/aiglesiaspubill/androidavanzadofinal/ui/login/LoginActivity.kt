@@ -42,9 +42,13 @@ class LoginActivity : AppCompatActivity() {
     //FUNCION DE OBSERVADORES
     private fun observeLoginState() {
         viewModel.stateLogin.observe(this) {
-            when(it) {
+            when (it) {
                 is LoginState.Failure -> Toast.makeText(this, it.error, Toast.LENGTH_SHORT).show()
-                is LoginState.NetworkError -> Toast.makeText(this, "Error de otro tipo en el LOGIN", Toast.LENGTH_SHORT).show()
+                is LoginState.NetworkError -> Toast.makeText(
+                    this,
+                    "Error de otro tipo en el LOGIN",
+                    Toast.LENGTH_SHORT
+                ).show()
                 is LoginState.Succes -> {
                     val intent = Intent(this@LoginActivity, MainActivity::class.java)
                     startActivity(intent)

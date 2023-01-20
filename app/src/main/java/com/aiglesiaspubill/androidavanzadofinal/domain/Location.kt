@@ -3,8 +3,6 @@ package com.aiglesiaspubill.androidavanzadofinal.domain
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
-
-//PRESENTACION
 @Parcelize
 data class Location (
         val id: String,

@@ -17,7 +17,10 @@ import java.util.regex.Pattern
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(private val repository: Repository, private val sharedPreferences: SharedPreferences) : ViewModel() {
+class LoginViewModel @Inject constructor(
+    private val repository: Repository,
+    private val sharedPreferences: SharedPreferences
+) : ViewModel() {
 
     private val _stateLogin = MutableLiveData<LoginState>()
     val stateLogin: LiveData<LoginState>
@@ -37,7 +40,7 @@ class LoginViewModel @Inject constructor(private val repository: Repository, pri
     //CHEKEAR USUARIO
     private fun checkUser(user: String): Boolean {
         if (user.isEmpty() || user.isBlank()) return false
-        if(!PatternsCompat.EMAIL_ADDRESS.matcher(user).matches()) return false
+        if (!PatternsCompat.EMAIL_ADDRESS.matcher(user).matches()) return false
         return true
     }
 
@@ -53,10 +56,9 @@ class LoginViewModel @Inject constructor(private val repository: Repository, pri
                     "$"
         )
         if (password.isEmpty() || password.isBlank()) return false
-        if(!passwordRegex.matcher(password).matches()) return false
+        if (!passwordRegex.matcher(password).matches()) return false
         return true
     }
-
 
 
     //HACER EL LOGIN
@@ -68,22 +70,21 @@ class LoginViewModel @Inject constructor(private val repository: Repository, pri
             setValueOnMainThread(LoginState.Failure("Error en Usuario"))
             return
         }
-        if(!checkPassword(pass)){
+        if (!checkPassword(pass)) {
             setValueOnMainThread(LoginState.Failure("Error en Contrasenya"))
             return
         }
 
         //COMPRUEBO SI ESTA EN SHAREDPREFERENCES
-        if(sharedPreferences.getString("TOKEN", null) == null) {
-            sharedPreferences.edit().putString("CREDENTIAL", getCredentials(user,pass)).apply()
-            //LLAMO PARA OBTENER EL TOKEN
-            viewModelScope.launch {
-                val token = withContext(Dispatchers.IO) {
-                    repository.getToken()
-                }
-                setValueOnMainThread(token)
-            }
+        if (sharedPreferences.getString("TOKEN", null) == null) {
+            sharedPreferences.edit().putString("CREDENTIAL", getCredentials(user, pass)).apply()
         }
-        else setValueOnMainThread(LoginState.Failure("No se puedo obtener el token"))
+        //LLAMO PARA OBTENER EL TOKEN
+        viewModelScope.launch {
+            val token = withContext(Dispatchers.IO) {
+                repository.getToken()
+            }
+            setValueOnMainThread(token)
+        }
     }
 }

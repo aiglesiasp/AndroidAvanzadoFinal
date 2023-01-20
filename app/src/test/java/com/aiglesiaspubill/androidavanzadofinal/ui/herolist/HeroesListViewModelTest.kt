@@ -2,7 +2,6 @@ package com.aiglesiaspubill.androidavanzadofinal.ui.herolist
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.aiglesiaspubill.androidavanzadofinal.data.Repository
-import com.aiglesiaspubill.androidavanzadofinal.data.RepositoryImpl
 import com.aiglesiaspubill.androidavanzadofinal.utils.generateHeros
 import com.aiglesiaspubill.androidavanzadofinal.utils.getOrAwaitValue
 import com.google.common.truth.Truth
@@ -14,7 +13,6 @@ import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
-import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -26,7 +24,7 @@ class HeroesListViewModelTest {
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     //SUT
-    private lateinit var sut : HeroesListViewModel
+    private lateinit var sut: HeroesListViewModel
 
     //Dependencias
     private lateinit var repository: Repository

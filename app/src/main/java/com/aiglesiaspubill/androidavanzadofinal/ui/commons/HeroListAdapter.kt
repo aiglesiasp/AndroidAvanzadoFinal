@@ -11,21 +11,25 @@ import com.aiglesiaspubill.androidavanzadofinal.R
 import com.aiglesiaspubill.androidavanzadofinal.databinding.ItemHeroListBinding
 import com.aiglesiaspubill.androidavanzadofinal.domain.Hero
 
-class HeroListAdapter(private val clickListener: (Hero)-> (Unit)): ListAdapter<Hero, HeroListAdapter.HeroViewHolder>(HeroDiffCallback()) {
+class HeroListAdapter(private val clickListener: (Hero) -> (Unit)) :
+    ListAdapter<Hero, HeroListAdapter.HeroViewHolder>(HeroDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HeroViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_hero_list, parent, false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_hero_list, parent, false)
         val binding = ItemHeroListBinding.bind(view)
-        return  HeroViewHolder(binding)
+        return HeroViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: HeroViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
-    //CLASE VIEWHOLDER
-    inner class HeroViewHolder (private val binding: ItemHeroListBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        private  val name: TextView = itemView.findViewById(R.id.hero_name)
+    //CLASE VIEWHOLDER
+    inner class HeroViewHolder(private val binding: ItemHeroListBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        private val name: TextView = itemView.findViewById(R.id.hero_name)
         private lateinit var hero: Hero
 
         init {
@@ -44,10 +48,11 @@ class HeroListAdapter(private val clickListener: (Hero)-> (Unit)): ListAdapter<H
     }
 
     //Callback Item
-    class HeroDiffCallback: DiffUtil.ItemCallback<Hero>() {
+    class HeroDiffCallback : DiffUtil.ItemCallback<Hero>() {
         override fun areItemsTheSame(oldItem: Hero, newItem: Hero): Boolean {
             return oldItem.id == newItem.id
         }
+
         override fun areContentsTheSame(oldItem: Hero, newItem: Hero): Boolean {
             return oldItem == newItem
         }

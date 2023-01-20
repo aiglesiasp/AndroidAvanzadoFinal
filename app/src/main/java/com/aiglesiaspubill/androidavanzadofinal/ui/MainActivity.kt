@@ -6,8 +6,6 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
-import android.view.Menu
-import android.view.MenuItem
 import com.aiglesiaspubill.androidavanzadofinal.R
 import com.aiglesiaspubill.androidavanzadofinal.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,7 +28,6 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
     }
-
 
 
     //PARA NAVEGARR POR EL GRAFO DE DATOS

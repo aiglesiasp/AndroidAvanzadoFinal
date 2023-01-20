@@ -6,8 +6,8 @@ import androidx.room.PrimaryKey
 
 //MODELO PARA BASES DE DATOS LOCAL
 @Entity(tableName = "heroes")
-data class HeroLocal (
-    @PrimaryKey val id: String,
+data class HeroLocal(
+    @PrimaryKey @ColumnInfo(name = "id") val id: String,
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "photo") val photo: String,
     @ColumnInfo(name = "description") val description: String,

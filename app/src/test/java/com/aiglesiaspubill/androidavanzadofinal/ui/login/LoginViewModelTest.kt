@@ -5,15 +5,10 @@ import android.content.SharedPreferences
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.core.app.ApplicationProvider
 import com.aiglesiaspubill.androidavanzadofinal.data.Repository
-import com.aiglesiaspubill.androidavanzadofinal.fakes.FakeRepository
-import com.aiglesiaspubill.androidavanzadofinal.utils.generateHeros
 import com.aiglesiaspubill.androidavanzadofinal.utils.generateToken
 import com.aiglesiaspubill.androidavanzadofinal.utils.getOrAwaitValue
-import com.aiglesiaspubill.androidavanzadofinal.ui.herolist.HeroListState
-import com.aiglesiaspubill.androidavanzadofinal.ui.herolist.HeroesListViewModel
 import com.aiglesiaspubill.androidavanzadofinal.utils.Shared
 import com.google.common.truth.Truth
-import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -27,7 +22,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito.mock
 import org.robolectric.RobolectricTestRunner
 
 @RunWith(RobolectricTestRunner::class)
@@ -39,7 +33,7 @@ class LoginViewModelTest {
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     //SUT
-    private lateinit var sut : LoginViewModel
+    private lateinit var sut: LoginViewModel
 
     //Dependencias
     private lateinit var repository: Repository

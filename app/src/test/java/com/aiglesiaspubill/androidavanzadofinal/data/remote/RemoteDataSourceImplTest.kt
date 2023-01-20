@@ -1,12 +1,6 @@
 package com.aiglesiaspubill.androidavanzadofinal.data.remote
 
 import com.aiglesiaspubill.androidavanzadofinal.base.BaseNetworkTest
-import com.aiglesiaspubill.androidavanzadofinal.ui.detail.DetailState
-import com.aiglesiaspubill.androidavanzadofinal.ui.herolist.HeroListState
-import com.aiglesiaspubill.androidavanzadofinal.utils.generateHero
-import com.aiglesiaspubill.androidavanzadofinal.utils.generateHeros
-import com.aiglesiaspubill.androidavanzadofinal.utils.generateHerosRemote
-import com.aiglesiaspubill.androidavanzadofinal.utils.getOrAwaitValue
 import com.google.common.truth.Truth
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -19,10 +13,11 @@ import org.mockito.ArgumentMatchers.anyString
 class RemoteDataSourceImplTest : BaseNetworkTest() {
 
     private lateinit var sut: RemoteDataSource
+
     //------------------------------------------------------------------------------------//
     @Before
     fun setUp() {
-       sut = RemoteDataSourceImpl(api)
+        sut = RemoteDataSourceImpl(api)
     }
 
     //------------------------------------------------------------------------------------//

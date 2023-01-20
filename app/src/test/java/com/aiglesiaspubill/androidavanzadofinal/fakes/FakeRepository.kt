@@ -10,7 +10,7 @@ import com.aiglesiaspubill.androidavanzadofinal.utils.generateHeros
 import com.aiglesiaspubill.androidavanzadofinal.utils.generateLocations
 import com.aiglesiaspubill.androidavanzadofinal.utils.generateToken
 
-class FakeRepository: Repository {
+class FakeRepository : Repository {
     override suspend fun getHeroes(): HeroListState {
         return HeroListState.Succes(generateHeros())
     }

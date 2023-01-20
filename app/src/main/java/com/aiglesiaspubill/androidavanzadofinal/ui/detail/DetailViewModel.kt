@@ -11,8 +11,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
-    private val repository : Repository,
-): ViewModel() {
+    private val repository: Repository,
+) : ViewModel() {
 
     private val _stateDetail = MutableLiveData<DetailState>()
     val stateDetail: LiveData<DetailState>
@@ -36,9 +36,9 @@ class DetailViewModel @Inject constructor(
                 repository.getHeroDetail(name)
             }
             //OBTENER LAS LOCALIZACIONES
-            when(stateDetail) {
-                is DetailState.Failure -> Log.d("LOCATIONS","Error al buscar localizaciones")
-                is DetailState.NetworkError -> Log.d("LOCATIONS","Error Network")
+            when (stateDetail) {
+                is DetailState.Failure -> Log.d("LOCATIONS", "Error al buscar localizaciones")
+                is DetailState.NetworkError -> Log.d("LOCATIONS", "Error Network")
                 is DetailState.Succes -> {
                     val locations = withContext(Dispatchers.IO) {
                         repository.getLocations(stateDetail.hero.id)
@@ -56,7 +56,7 @@ class DetailViewModel @Inject constructor(
     fun changeFavorite() {
         val stateDetail = stateDetail.value as DetailState.Succes
         val hero = stateDetail.hero
-        hero.favorite =!hero.favorite
+        hero.favorite = !hero.favorite
         viewModelScope.launch {
             repository.changeFavorite(hero.id)
         }

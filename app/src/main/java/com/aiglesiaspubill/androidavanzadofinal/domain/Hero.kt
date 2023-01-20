@@ -4,9 +4,8 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.RawValue
 
-//PRESENTACION
 @Parcelize
-data class Hero (
+data class Hero(
     val id: String,
     val name: String,
     val photo: String,

@@ -1,16 +1,13 @@
 package com.aiglesiaspubill.androidavanzadofinal.data.local
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.aiglesiaspubill.androidavanzadofinal.data.local.model.HeroLocal
 
 @Dao
 interface HeroDAO {
     //SELECCIONAR TODOS LOS HEROES
     @Query("SELECT * FROM heroes")
-    fun getAllHeros() : List<HeroLocal>
+    fun getAllHeros(): List<HeroLocal>
 
     //INSERTAR LISTA HEROES
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -19,4 +16,6 @@ interface HeroDAO {
     //INSERTAR UN HEROE
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertHero(hero: HeroLocal)
+
+
 }

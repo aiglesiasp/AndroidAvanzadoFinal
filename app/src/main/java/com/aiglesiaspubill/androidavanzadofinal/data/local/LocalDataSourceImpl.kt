@@ -11,7 +11,8 @@ class LocalDataSourceImpl @Inject constructor(private val dao: HeroDAO) : LocalD
     }
 
     //Insertar un heroe en la base de datos
-    override fun insertHeros(remoteHero: List<HeroLocal>) {
+    override fun insertAll(remoteHero: List<HeroLocal>) {
         dao.insertAll(remoteHero)
     }
+
 }

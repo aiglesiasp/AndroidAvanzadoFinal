@@ -11,11 +11,12 @@ import com.aiglesiaspubill.androidavanzadofinal.ui.login.LoginState
 import retrofit2.HttpException
 import javax.inject.Inject
 
-class RepositoryImpl @Inject constructor(private val localDataSource: LocalDataSource,
-                                         private val remoteDataSource: RemoteDataSource,
-                                         private val mappers: Mappers,
-                                         private val sharedPreferences: SharedPreferences
-                 ): Repository {
+class RepositoryImpl @Inject constructor(
+    private val localDataSource: LocalDataSource,
+    private val remoteDataSource: RemoteDataSource,
+    private val mappers: Mappers,
+    private val sharedPreferences: SharedPreferences
+) : Repository {
 
     companion object {
         val TOKEN = "TOKEN"
@@ -40,7 +41,7 @@ class RepositoryImpl @Inject constructor(private val localDataSource: LocalDataS
                 is HeroListState.NetworkError -> return remoteResult
                 is HeroListState.Succes -> {
                     localResult = mappers.mapPresentationToLocal(remoteResult.heros)
-                    localDataSource.insertHeros(localResult)
+                    localDataSource.insertAll(localResult)
                 }
             }
         }
@@ -56,7 +57,9 @@ class RepositoryImpl @Inject constructor(private val localDataSource: LocalDataS
                 return LoginState.Succes(token.getOrThrow())
             }
             token.isFailure -> LoginState.Failure("Error al intentar conseguir el token")
-            else -> {LoginState.NetworkError(0)}
+            else -> {
+                LoginState.NetworkError(0)
+            }
         }
     }
 
@@ -94,4 +97,6 @@ class RepositoryImpl @Inject constructor(private val localDataSource: LocalDataS
     override suspend fun changeFavorite(id: String) {
         remoteDataSource.changeFavorite(id)
     }
+
+
 }

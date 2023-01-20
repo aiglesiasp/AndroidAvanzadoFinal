@@ -4,13 +4,14 @@ import com.aiglesiaspubill.androidavanzadofinal.data.local.LocalDataSource
 import com.aiglesiaspubill.androidavanzadofinal.data.local.model.HeroLocal
 import com.aiglesiaspubill.androidavanzadofinal.utils.generateHerosLocal
 
-class FakeLocalDataSource: LocalDataSource {
+class FakeLocalDataSource : LocalDataSource {
 
 
     override fun getHeroes(): List<HeroLocal> {
-            return generateHerosLocal()
-        }
-
-    override fun insertHeros(remoteHero: List<HeroLocal>) {
+        return generateHerosLocal()
     }
+
+    override fun insertAll(remoteHero: List<HeroLocal>) {
+    }
+
 }

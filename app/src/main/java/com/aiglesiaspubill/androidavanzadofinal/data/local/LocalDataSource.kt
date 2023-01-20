@@ -4,5 +4,5 @@ import com.aiglesiaspubill.androidavanzadofinal.data.local.model.HeroLocal
 
 interface LocalDataSource {
     fun getHeroes(): List<HeroLocal>
-    fun insertHeros(remoteHero: List<HeroLocal>)
+    fun insertAll(remoteHero: List<HeroLocal>)
 }

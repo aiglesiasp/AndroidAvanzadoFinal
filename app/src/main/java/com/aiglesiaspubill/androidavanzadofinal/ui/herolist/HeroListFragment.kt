@@ -28,16 +28,14 @@ class HeroListFragment : Fragment() {
 
     private val adapter = HeroListAdapter {
         Log.d("Adapter click", it.toString())
-        //Navegar al fragment detail
-        //OPCION 1 sin pasar argumentos
-        //findNavController().navigate(R.id.action_HeroeListFragment_to_DetailFragment)
-        //OPCION 2
-        //PASANDO ARGUMENTOS
-        findNavController().navigate(HeroListFragmentDirections.actionHeroeListFragmentToDetailFragment(it))
+        findNavController().navigate(
+            HeroListFragmentDirections.actionHeroeListFragmentToDetailFragment(
+                it
+            )
+        )
     }
 
     private val viewModel: HeroesListViewModel by viewModels()
-
 
 
     override fun onCreateView(
@@ -54,7 +52,8 @@ class HeroListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-            heroList.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            heroList.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             heroList.adapter = adapter
 
             observeHeroesListState()
@@ -65,7 +64,11 @@ class HeroListFragment : Fragment() {
     private fun observeHeroesListState() {
         viewModel.stateHeroes.observe(viewLifecycleOwner) { state ->
             when (state) {
-                is HeroListState.Failure -> Toast.makeText(requireContext(), state.error, Toast.LENGTH_LONG).show()
+                is HeroListState.Failure -> Toast.makeText(
+                    requireContext(),
+                    state.error,
+                    Toast.LENGTH_LONG
+                ).show()
                 is HeroListState.Succes -> adapter.submitList(state.heros)
                 is HeroListState.NetworkError -> println("NETWORK ERROR")
             }

@@ -2,7 +2,6 @@ package com.aiglesiaspubill.androidavanzadofinal.ui.detail
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.aiglesiaspubill.androidavanzadofinal.data.Repository
-import com.aiglesiaspubill.androidavanzadofinal.data.remote.response.LocationRemote
 import com.aiglesiaspubill.androidavanzadofinal.utils.generateHero
 import com.aiglesiaspubill.androidavanzadofinal.utils.generateLocations
 import com.aiglesiaspubill.androidavanzadofinal.utils.getOrAwaitValue
@@ -15,7 +14,6 @@ import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
-import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -26,7 +24,7 @@ class DetailViewModelTest {
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     //SUT
-    private lateinit var sut : DetailViewModel
+    private lateinit var sut: DetailViewModel
 
     //Dependencias
     private lateinit var repository: Repository
@@ -55,7 +53,9 @@ class DetailViewModelTest {
         sut = DetailViewModel(repository)
         val hero = generateHero()
 
-        coEvery { repository.getHeroDetail(hero.first().name) } returns DetailState.Succes(generateHero().first())
+        coEvery { repository.getHeroDetail(hero.first().name) } returns DetailState.Succes(
+            generateHero().first()
+        )
         coEvery { repository.getLocations(hero.first().id) } returns generateLocations()
 
         //WHEN
