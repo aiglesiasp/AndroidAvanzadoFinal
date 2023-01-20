@@ -25,7 +25,6 @@ class HeroListAdapter(private val clickListener: (Hero) -> (Unit)) :
         holder.bind(getItem(position))
     }
 
-    //CLASE VIEWHOLDER
     inner class HeroViewHolder(private val binding: ItemHeroListBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
@@ -47,7 +46,6 @@ class HeroListAdapter(private val clickListener: (Hero) -> (Unit)) :
         }
     }
 
-    //Callback Item
     class HeroDiffCallback : DiffUtil.ItemCallback<Hero>() {
         override fun areItemsTheSame(oldItem: Hero, newItem: Hero): Boolean {
             return oldItem.id == newItem.id

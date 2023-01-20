@@ -13,7 +13,7 @@ android {
 
     defaultConfig {
         applicationId "com.aiglesiaspubill.androidavanzadofinal"
-        minSdk 26
+        minSdk 21
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -61,8 +61,8 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.moshi:moshi-kotlin:1.14.0'
     implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'
-    //Interceptor
     implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.3'
+    implementation("com.squareup.retrofit2:converter-scalars:2.1.0")
 
     //PARA IMAGENES
     implementation 'io.coil-kt:coil:2.2.2'
@@ -70,7 +70,6 @@ dependencies {
     //PARA LOCAL DATA SOURCE - ROOM
     implementation 'androidx.room:room-runtime:2.4.3'
     implementation 'androidx.room:room-ktx:2.4.3'
-    implementation 'androidx.test:core-ktx:1.4.0'
     kapt 'androidx.room:room-compiler:2.4.3'
 
     //DAGGER HILT
@@ -84,7 +83,6 @@ dependencies {
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.0")
     testImplementation("com.google.truth:truth:1.0")
     testImplementation("com.squareup.okhttp3:mockwebserver:4.2.1")
-    testImplementation ("org.robolectric:robolectric:4.9")
 
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'

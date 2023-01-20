@@ -17,7 +17,6 @@ class HeroesListViewModel @Inject constructor(
     val stateHeroes: LiveData<HeroListState>
         get() = _stateHeroes
 
-    //INICIAR CONEXION CON REPOSITORIO REMOTO
     companion object {
         private val TAG = "HeroesListViewModel"
     }
@@ -28,7 +27,6 @@ class HeroesListViewModel @Inject constructor(
         }
     }
 
-    //OBTENER HEROES
     fun getHeroes() {
         viewModelScope.launch {
             val heroesListState = withContext(Dispatchers.IO) {

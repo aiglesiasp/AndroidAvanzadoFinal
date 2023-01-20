@@ -60,21 +60,18 @@ class HeroDetailFragment : Fragment() {
         }
     }
 
-    //PINTAR HEROE NE PANTALLA
     private fun setHero(hero: Hero) {
         binding.nameHeroDetail.text = hero.name
         binding.descriptionHeroDetail.text = hero.description
         binding.imageHeroDetail.load(hero.photo)
     }
 
-    //PINTAR LOCALIZACIONES HEROE
     private fun setHeroLocations(hero: Hero) {
         binding.locationsDateShow.text = "FECHA: ${hero.locations?.first()?.dateShow}"
         binding.locationsLatitud.text = "LATITUD: ${hero.locations?.first()?.latitud}"
         binding.locationsLongitud.text = "LONGITUD: ${hero.locations?.first()?.longitud}"
     }
 
-    //PINTAR EL ICONO
     private fun setHeroFavorite(hero: Hero) {
         when (hero.favorite) {
             true -> binding.buttonFavorite.setImageResource(R.drawable.ic_favorite)
@@ -82,7 +79,6 @@ class HeroDetailFragment : Fragment() {
         }
     }
 
-    //FUNCION DE LISTENERS
     private fun setListeners(hero: Hero) {
         with(binding) {
             buttonFavorite.setOnClickListener {

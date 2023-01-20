@@ -21,10 +21,9 @@ import dagger.hilt.android.AndroidEntryPoint
 class HeroListFragment : Fragment() {
 
     private var _binding: FragmentHeroListBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
+
+    private val viewModel: HeroesListViewModel by viewModels()
 
     private val adapter = HeroListAdapter {
         Log.d("Adapter click", it.toString())
@@ -34,9 +33,6 @@ class HeroListFragment : Fragment() {
             )
         )
     }
-
-    private val viewModel: HeroesListViewModel by viewModels()
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

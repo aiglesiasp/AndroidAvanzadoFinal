@@ -32,19 +32,16 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    //OBTENER CREDENCIALES
     private fun getCredentials(user: String, pass: String): String {
         return Credentials.basic(user, pass, StandardCharsets.UTF_8)
     }
 
-    //CHEKEAR USUARIO
     private fun checkUser(user: String): Boolean {
         if (user.isEmpty() || user.isBlank()) return false
         if (!PatternsCompat.EMAIL_ADDRESS.matcher(user).matches()) return false
         return true
     }
 
-    //CHEKEAR PASSWORD
     private fun checkPassword(password: String): Boolean {
         val passwordRegex = Pattern.compile(
             "^" +
@@ -60,12 +57,9 @@ class LoginViewModel @Inject constructor(
         return true
     }
 
-
-    //HACER EL LOGIN
     fun login(user: String, pass: String) {
         setValueOnMainThread(LoginState.loading)
 
-        //COMPROBAR LOGIN y USUARIO
         if (!checkUser(user)) {
             setValueOnMainThread(LoginState.Failure("Error en Usuario"))
             return
@@ -75,11 +69,10 @@ class LoginViewModel @Inject constructor(
             return
         }
 
-        //COMPRUEBO SI ESTA EN SHAREDPREFERENCES
         if (sharedPreferences.getString("TOKEN", null) == null) {
             sharedPreferences.edit().putString("CREDENTIAL", getCredentials(user, pass)).apply()
         }
-        //LLAMO PARA OBTENER EL TOKEN
+
         viewModelScope.launch {
             val token = withContext(Dispatchers.IO) {
                 repository.getToken()

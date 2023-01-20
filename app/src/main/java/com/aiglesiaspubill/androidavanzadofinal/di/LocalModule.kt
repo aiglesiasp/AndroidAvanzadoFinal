@@ -14,13 +14,11 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 object LocalModule {
 
-    //NOS DA EL DATABASE
     @Provides
     fun provideDatabase(@ApplicationContext context: Context): HeroDatabase {
         return Room.databaseBuilder(context, HeroDatabase::class.java, "database-name").build()
     }
 
-    //NOS DA EL DAO
     @Provides
     fun provideDao(database: HeroDatabase): HeroDAO {
         return database.getDAO()

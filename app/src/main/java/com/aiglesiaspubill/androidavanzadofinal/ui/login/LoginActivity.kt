@@ -19,27 +19,21 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        //FUNCIONES DE ESCUCHA
         setListeners()
-        //FUNCIONES DE OBSERVADORES
         observeLoginState()
     }
 
-
-    //FUNCION DE ESCUCHAS
     private fun setListeners() {
         with(binding) {
             buttonLogin.setOnClickListener {
                 val user: String = binding.editTextName.text.toString()
                 val pass: String = binding.editTextPassword.text.toString()
-                //LLAMAREMOS AL VIEWMODEL PARA QUE HAGA EL LOGIN
                 viewModel.login(user, pass)
             }
         }
 
     }
 
-    //FUNCION DE OBSERVADORES
     private fun observeLoginState() {
         viewModel.stateLogin.observe(this) {
             when (it) {

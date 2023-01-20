@@ -23,13 +23,11 @@ object RemoteModule {
     private val TAG_TOKEN =
         "eyJraWQiOiJwcml2YXRlIiwidHlwIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJpZGVudGlmeSI6IkM3QTZBRENFLUM3MjUtNDlFRi04MEFDLTMxNDVCODkxQzg5NCIsImV4cGlyYXRpb24iOjY0MDkyMjExMjAwLCJlbWFpbCI6ImFpZ2xlc2lhc3B1YmlsbEBnbWFpbC5jb20ifQ.NjSKR-UPBTVSNIKunr8QPjwUiZJcnUObOv0pYG28Avc"
 
-    //NOS DA EL SHAREDPREFERENCES
     @Provides
     fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences {
         return context.getSharedPreferences("NAME", Context.MODE_PRIVATE)
     }
 
-    //NOS DA EL HTTPLOGINGINTERCEPTOR
     @Provides
     fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
         val httpLoggingInterceptor =
@@ -39,7 +37,6 @@ object RemoteModule {
         return httpLoggingInterceptor
     }
 
-    //NOS DA EL OKHTTPCLIENT
     @Provides
     fun provideOkHttpClient(
         httpLoggingInterceptor: HttpLoggingInterceptor,
@@ -76,7 +73,6 @@ object RemoteModule {
         return okHttpClient
     }
 
-    //NOS DA EL MOSHI
     @Provides
     fun provideMoshi(): Moshi {
         val moshi = Moshi.Builder()
@@ -85,7 +81,6 @@ object RemoteModule {
         return moshi
     }
 
-    //NOS DA EL RETROFIT
     @Provides
     fun provideRetrofit(okHttpClient: OkHttpClient, moshi: Moshi): Retrofit {
         var retrofit = Retrofit.Builder()
@@ -96,7 +91,6 @@ object RemoteModule {
         return retrofit
     }
 
-    //NOS DA EL API
     @Provides
     fun provideAPI(retrofit: Retrofit): DragonBallAPI {
         var api: DragonBallAPI = retrofit.create(DragonBallAPI::class.java)
