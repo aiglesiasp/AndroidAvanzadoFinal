@@ -53,7 +53,7 @@ class LoginViewModel @Inject constructor(
                     "$"
         )
         if (password.isEmpty() || password.isBlank()) return false
-        if (!passwordRegex.matcher(password).matches()) return false
+        //if (!passwordRegex.matcher(password).matches()) return false
         return true
     }
 
