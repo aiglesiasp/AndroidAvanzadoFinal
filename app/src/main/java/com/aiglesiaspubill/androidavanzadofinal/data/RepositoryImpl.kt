@@ -50,11 +50,14 @@ class RepositoryImpl @Inject constructor(private val localDataSource: LocalDataS
     //OBTENER EL TOKEN
     override suspend fun getToken(): LoginState {
         val token = remoteDataSource.getToken()
-        token.onSuccess {
-            sharedPreferences.edit().putString(TOKEN, token.getOrThrow()).apply()
-            return LoginState.Succes(token.getOrThrow())
+        return when {
+            token.isSuccess -> {
+                sharedPreferences.edit().putString(TOKEN, token.getOrThrow()).apply()
+                return LoginState.Succes(token.getOrThrow())
+            }
+            token.isFailure -> LoginState.Failure("Error al intentar conseguir el token")
+            else -> {LoginState.NetworkError(0)}
         }
-        return LoginState.Failure("Error al intentar conseguir el token")
     }
 
     //OBTENER EL DETALLE DEL HEROE

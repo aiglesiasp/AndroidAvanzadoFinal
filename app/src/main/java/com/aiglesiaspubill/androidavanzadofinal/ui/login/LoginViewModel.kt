@@ -76,13 +76,14 @@ class LoginViewModel @Inject constructor(private val repository: Repository, pri
         //COMPRUEBO SI ESTA EN SHAREDPREFERENCES
         if(sharedPreferences.getString("TOKEN", null) == null) {
             sharedPreferences.edit().putString("CREDENTIAL", getCredentials(user,pass)).apply()
-        }
-        //LLAMO PARA OBTENER EL TOKEN
-        viewModelScope.launch {
-            val token = withContext(Dispatchers.IO) {
-                repository.getToken()
+            //LLAMO PARA OBTENER EL TOKEN
+            viewModelScope.launch {
+                val token = withContext(Dispatchers.IO) {
+                    repository.getToken()
+                }
+                setValueOnMainThread(token)
             }
-            setValueOnMainThread(token)
         }
+        else setValueOnMainThread(LoginState.Failure("No se puedo obtener el token"))
     }
 }
