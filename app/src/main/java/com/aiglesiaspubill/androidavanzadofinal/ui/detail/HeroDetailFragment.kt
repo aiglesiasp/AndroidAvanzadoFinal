@@ -67,9 +67,17 @@ class HeroDetailFragment : Fragment() {
     }
 
     private fun setHeroLocations(hero: Hero) {
-        binding.locationsDateShow.text = "FECHA: ${hero.locations?.first()?.dateShow}"
-        binding.locationsLatitud.text = "LATITUD: ${hero.locations?.first()?.latitud}"
-        binding.locationsLongitud.text = "LONGITUD: ${hero.locations?.first()?.longitud}"
+        if(hero.locations?.isEmpty() == true)
+        {
+            binding.locationsDateShow.text = "FECHA: NS/NC "
+            binding.locationsLatitud.text = "LATITUD: NS/NC "
+            binding.locationsLongitud.text = "LONGITUD: NS/NC"
+
+        } else {
+            binding.locationsDateShow.text = "FECHA: ${hero.locations?.first()?.dateShow}"
+            binding.locationsLatitud.text = "LATITUD: ${hero.locations?.first()?.latitud}"
+            binding.locationsLongitud.text = "LONGITUD: ${hero.locations?.first()?.longitud}"
+        }
     }
 
     private fun setHeroFavorite(hero: Hero) {

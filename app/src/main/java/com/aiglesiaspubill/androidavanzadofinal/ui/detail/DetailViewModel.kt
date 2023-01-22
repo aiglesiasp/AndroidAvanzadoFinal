@@ -41,6 +41,9 @@ class DetailViewModel @Inject constructor(
                         repository.getLocations(stateDetail.hero.id)
 
                     }
+                    if(locations.isEmpty()) {
+                        stateDetail.hero.locations = emptyList()
+                    }
                     stateDetail.hero.locations = locations
                 }
 
